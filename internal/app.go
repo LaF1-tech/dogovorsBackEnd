@@ -1,13 +1,11 @@
 package internal
 
-import "dogovorsBackEnd/internal/configs"
-
 func App() error {
-	db, err := configs.ConnectToDatabase(configs.Config.Database)
+	handler, _, err := Configure()
 	if err != nil {
 		return err
 	}
 
-	_ = db
+	_ = handler
 	return nil
 }
