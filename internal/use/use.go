@@ -1,1 +1,5 @@
 package use
+
+func New() {
+
+}
