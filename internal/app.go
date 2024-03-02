@@ -6,6 +6,5 @@ func App() error {
 		return err
 	}
 
-	_ = handler
-	return nil
+	return handler.Routes().Run()
 }

@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/stdyum/api-common/env"
+	"dogovorsBackEnd/pkg/env"
 )
 
 var Config Model

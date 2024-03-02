@@ -7,7 +7,8 @@ create table tbl_users
     username   VARCHAR(50) UNIQUE NOT NULL,
     password   TEXT               NOT NULL,
     first_name VARCHAR(100),
-    last_name  VARCHAR(100)
+    last_name  VARCHAR(100),
+    permissions tp_permission[] NULL
 );
 
 CALL register_updated_at_created_at_columns('tbl_users');

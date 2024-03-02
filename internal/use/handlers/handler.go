@@ -1,8 +1,15 @@
 package handlers
 
-import "dogovorsBackEnd/internal/use/controllers"
+import (
+	"dogovorsBackEnd/internal/use/controllers"
+	"github.com/gin-gonic/gin"
+)
 
 type Handler interface {
+	Routes() *gin.Engine
+
+	SignUp(ctx *gin.Context)
+	Login(ctx *gin.Context)
 }
 
 type handler struct {
