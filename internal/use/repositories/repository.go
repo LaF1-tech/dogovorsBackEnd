@@ -10,6 +10,7 @@ type Repository interface {
 	GetUserByToken(ctx context.Context, token string) (entities.User, error)
 	GetUserByUsername(ctx context.Context, username string) (entities.User, error)
 	CreateUser(ctx context.Context, user entities.User) (int, error)
+	UpdateUser(ctx context.Context, user entities.User) error
 
 	CreateSession(ctx context.Context, session entities.Session) error
 }

@@ -34,6 +34,15 @@ insert into tbl_users(username, password, first_name, last_name, permissions) VA
 	return r.scanId(row)
 }
 
+func (r *repository) UpdateUser(ctx context.Context, user entities.User) error {
+	query := `
+update tbl_users set password=$2, first_name=$3, last_name=$4, permissions=$5 where user_id = $1
+`
+
+	_, err := r.db.ExecContext(ctx, query, user.UserID, user.Password, user.FirstName, user.LastName, pq.Array(user.Permissions))
+	return err
+}
+
 func (r *repository) CreateSession(ctx context.Context, session entities.Session) error {
 	query := `
 insert into tbl_sessions (user_id, token) values ($1, $2)
