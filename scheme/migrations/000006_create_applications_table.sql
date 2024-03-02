@@ -10,6 +10,7 @@ CREATE TABLE tbl_applications
     applicant_middlename  VARCHAR(255)          NOT NULL,
     education_institution VARCHAR(255),
     specialization        VARCHAR(255),
+    assigned_employer_id  INTEGER REFERENCES tbl_users (user_id),
     status                tp_application_status NOT NULL default ('В процессе')
 );
 
