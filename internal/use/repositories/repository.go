@@ -11,6 +11,7 @@ type Repository interface {
 	GetUserByUsername(ctx context.Context, username string) (entities.User, error)
 	CreateUser(ctx context.Context, user entities.User) (int, error)
 	UpdateUser(ctx context.Context, user entities.User) error
+	DeleteUserByID(ctx context.Context, userID int) error
 
 	CreateSession(ctx context.Context, session entities.Session) error
 }

@@ -11,6 +11,7 @@ import (
 
 var (
 	ErrInvalidPassword = errors.New("invalid password error")
+	ErrForbidden       = errors.New("forbidden")
 )
 
 type Controller interface {
@@ -18,6 +19,8 @@ type Controller interface {
 
 	SignUp(ctx context.Context, user models.User, request dto.SignUpRequestDTO) (dto.SignUpResponseDTO, error)
 	Login(ctx context.Context, request dto.LoginRequestDTO) (dto.LoginResponseDTO, error)
+	PatchUser(ctx context.Context, user models.User, request dto.UpdateRequestDTO) (dto.UpdateResponseDTO, error)
+	DeleteUserByID(ctx context.Context, user models.User, userID int) error
 }
 
 type controller struct {

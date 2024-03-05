@@ -10,6 +10,8 @@ type Handler interface {
 
 	SignUp(ctx *gin.Context)
 	Login(ctx *gin.Context)
+	PatchUser(ctx *gin.Context)
+	DeleteUser(ctx *gin.Context)
 }
 
 type handler struct {

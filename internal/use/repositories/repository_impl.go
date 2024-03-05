@@ -36,11 +36,26 @@ insert into tbl_users(username, password, first_name, last_name, permissions) VA
 
 func (r *repository) UpdateUser(ctx context.Context, user entities.User) error {
 	query := `
-update tbl_users set password=$2, first_name=$3, last_name=$4, permissions=$5 where user_id = $1
+update tbl_users set first_name=$2, last_name=$3, permissions=$4 where user_id = $1
 `
 
-	_, err := r.db.ExecContext(ctx, query, user.UserID, user.Password, user.FirstName, user.LastName, pq.Array(user.Permissions))
-	return err
+	_, err := r.db.ExecContext(ctx, query, user.UserID, user.FirstName, user.LastName, pq.Array(user.Permissions))
+	if err != nil {
+		return err
+	}
+
+	if user.Password != "" {
+		query = `
+update tbl_users set password = $2 where user_id = $1
+`
+
+		_, err = r.db.ExecContext(ctx, query, user.UserID, user.Password)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (r *repository) CreateSession(ctx context.Context, session entities.Session) error {
@@ -49,5 +64,13 @@ insert into tbl_sessions (user_id, token) values ($1, $2)
 `
 
 	_, err := r.db.ExecContext(ctx, query, session.UserID, session.Token)
+	return err
+}
+
+func (r *repository) DeleteUserByID(ctx context.Context, userID int) error {
+	query := `
+delete from tbl_users where user_id = $1
+`
+	_, err := r.db.ExecContext(ctx, query, userID)
 	return err
 }

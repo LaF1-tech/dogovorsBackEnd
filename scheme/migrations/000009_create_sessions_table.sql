@@ -3,7 +3,7 @@
 
 create table tbl_sessions
 (
-    user_id INTEGER REFERENCES tbl_users (user_id),
+    user_id INTEGER REFERENCES tbl_users (user_id) ON DELETE CASCADE,
     token text UNIQUE NOT NULL primary key
 );
 

@@ -34,3 +34,11 @@ func (v *validator) LoginDTO(_ context.Context, dto dto.LoginRequestDTO) error {
 
 	return nil
 }
+
+func (v *validator) UpdateDTO(_ context.Context, dto dto.UpdateRequestDTO) error {
+	if len(dto.Password) < 4 && len(dto.Password) != 0 {
+		return fmt.Errorf("password is too short, min length is 4: %w", ErrValidation)
+	}
+
+	return nil
+}

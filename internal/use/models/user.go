@@ -9,7 +9,7 @@ var (
 type Permission string
 
 var (
-	PermissionAdmin Permission = "CreateUsers"
+	PermissionAdmin Permission = "Admin"
 )
 
 type User struct {

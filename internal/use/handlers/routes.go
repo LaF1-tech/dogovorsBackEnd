@@ -17,6 +17,8 @@ func (h *handler) Routes() *gin.Engine {
 
 		usersGroup.POST("signup", auth, h.SignUp)
 		usersGroup.POST("login", h.Login)
+		usersGroup.PATCH("", auth, h.PatchUser)
+		usersGroup.DELETE(":id", auth, h.DeleteUser)
 	}
 
 	return r

@@ -3,7 +3,7 @@
 
 create type tp_permission as enum
 (
-    'CreateUsers'
+    'Admin'
 );
 
 -- +goose StatementEnd
