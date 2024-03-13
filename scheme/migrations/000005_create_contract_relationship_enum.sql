@@ -1,8 +1,9 @@
 -- +goose Up
 -- +goose StatementBegin
 
-CREATE TYPE tp_contract_relationship AS ENUM (
+CREATE TYPE tp_application AS ENUM(
     'Прохождение произв практики',
+    'Прохождение пред дипл практики',
     'Трудоустройство'
     );
 

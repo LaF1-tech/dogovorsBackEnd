@@ -2,19 +2,16 @@ package use
 
 import (
 	"database/sql"
-	"dogovorsBackEnd/internal/use/controllers"
-	"dogovorsBackEnd/internal/use/controllers/validators"
-	"dogovorsBackEnd/internal/use/handlers"
-	"dogovorsBackEnd/internal/use/repositories"
+
+	"dogovorsBackEnd/internal/use/http"
+	"dogovorsBackEnd/internal/use/modules"
+	"dogovorsBackEnd/internal/use/types"
 )
 
-func New(database *sql.DB) (handlers.Handler, controllers.Controller, error) {
-	repo := repositories.New(database)
+func New(database *sql.DB) (types.Runnable, types.Controllers) {
+	routes, ctrls := modules.New(database)
 
-	validator := validators.New()
-	ctrl := controllers.New(validator, repo)
+	runnable := http.ConfigureRoutes(routes...)
 
-	h := handlers.New(ctrl)
-
-	return h, ctrl, nil
+	return runnable, ctrls
 }

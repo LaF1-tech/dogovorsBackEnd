@@ -1,8 +1,9 @@
 package main
 
 import (
-	"dogovorsBackEnd/internal"
 	"log"
+
+	"dogovorsBackEnd/internal"
 )
 
 func main() {

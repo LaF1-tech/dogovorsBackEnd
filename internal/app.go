@@ -6,5 +6,5 @@ func App() error {
 		return err
 	}
 
-	return handler.Routes().Run()
+	return handler.Run()
 }

@@ -1,9 +1,10 @@
 package utils
 
 import (
-	"dogovorsBackEnd/internal/use/models"
 	"github.com/gin-gonic/gin"
 	"strconv"
+
+	"dogovorsBackEnd/internal/use/models"
 )
 
 func GetUser(ctx *gin.Context) models.User {
