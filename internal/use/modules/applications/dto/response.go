@@ -2,7 +2,7 @@ package dto
 
 import "dogovorsBackEnd/internal/use/modules/applications/entities"
 
-type CreateApplicationResponseDTO struct {
+type ApplicationItemResponseDTO struct {
 	ApplicationID              int                        `json:"application_id,omitempty"`
 	EducationalEstablishmentID int                        `json:"educational_establishment_id,omitempty"`
 	SpecializationID           int                        `json:"specialization_id,omitempty"`
@@ -13,4 +13,8 @@ type CreateApplicationResponseDTO struct {
 	PhoneNumber                string                     `json:"phone_number,omitempty"`
 	TemplateData               map[string]any             `json:"template_data,omitempty"`
 	ApplicationStatus          entities.ApplicationStatus `json:"application_status,omitempty"`
+}
+
+type ApplicationsResponseDTO struct {
+	List []ApplicationItemResponseDTO `json:"list,omitempty"`
 }

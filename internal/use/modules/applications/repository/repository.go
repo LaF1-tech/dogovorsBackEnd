@@ -9,6 +9,7 @@ import (
 
 type ApplicationsRepository interface {
 	CreateApplication(ctx context.Context, application entities.Application) (int, error)
+	GetAllApplications(ctx context.Context) ([]entities.Application, error)
 }
 
 type repository struct {

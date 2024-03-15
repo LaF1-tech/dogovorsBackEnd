@@ -6,8 +6,9 @@ import (
 	"dogovorsBackEnd/internal/use/http"
 )
 
-func (h *handler) Routes(group *gin.RouterGroup, middlewares *http.Middlewares) {
+func (h *handler) Routes(group *gin.RouterGroup, m *http.Middlewares) {
 	applicationsGroup := group.Group("applications")
 
 	applicationsGroup.POST("create", h.CreateApplication)
+	applicationsGroup.GET("", h.GetApplications)
 }

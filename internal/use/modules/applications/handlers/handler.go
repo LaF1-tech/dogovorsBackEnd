@@ -11,6 +11,7 @@ type ApplicationsHandler interface {
 	http.IRoutes
 
 	CreateApplication(ctx *gin.Context)
+	GetApplications(ctx *gin.Context)
 }
 
 type handler struct {

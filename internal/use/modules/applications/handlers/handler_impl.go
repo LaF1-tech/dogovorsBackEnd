@@ -23,3 +23,13 @@ func (h *handler) CreateApplication(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, response)
 
 }
+
+func (h *handler) GetApplications(ctx *gin.Context) {
+	response, err := h.controller.GetAllApplications(ctx)
+	if err != nil {
+		_ = ctx.Error(err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, response)
+}

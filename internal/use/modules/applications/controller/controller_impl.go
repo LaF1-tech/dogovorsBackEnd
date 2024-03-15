@@ -5,11 +5,12 @@ import (
 
 	"dogovorsBackEnd/internal/use/modules/applications/dto"
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
+	"dogovorsBackEnd/internal/use/utils/uslices"
 )
 
-func (c *controller) CreateApplication(ctx context.Context, request dto.CreateApplicationRequestDTO) (dto.CreateApplicationResponseDTO, error) {
+func (c *controller) CreateApplication(ctx context.Context, request dto.CreateApplicationRequestDTO) (dto.ApplicationItemResponseDTO, error) {
 	if err := c.validator.CreateApplicationRequest(ctx, request); err != nil {
-		return dto.CreateApplicationResponseDTO{}, err
+		return dto.ApplicationItemResponseDTO{}, err
 	}
 
 	application := entities.Application{
@@ -26,12 +27,12 @@ func (c *controller) CreateApplication(ctx context.Context, request dto.CreateAp
 
 	id, err := c.repository.CreateApplication(ctx, application)
 	if err != nil {
-		return dto.CreateApplicationResponseDTO{}, err
+		return dto.ApplicationItemResponseDTO{}, err
 	}
 
 	application.ApplicationID = id
 
-	return dto.CreateApplicationResponseDTO{
+	return dto.ApplicationItemResponseDTO{
 		ApplicationID:              application.ApplicationID,
 		EducationalEstablishmentID: application.EducationalEstablishmentID,
 		SpecializationID:           application.SpecializationID,
@@ -42,5 +43,29 @@ func (c *controller) CreateApplication(ctx context.Context, request dto.CreateAp
 		PhoneNumber:                application.PhoneNumber,
 		TemplateData:               application.TemplateData,
 		ApplicationStatus:          application.ApplicationStatus,
+	}, nil
+}
+
+func (c *controller) GetAllApplications(ctx context.Context) (dto.ApplicationsResponseDTO, error) {
+	applications, err := c.repository.GetAllApplications(ctx)
+	if err != nil {
+		return dto.ApplicationsResponseDTO{}, err
+	}
+
+	return dto.ApplicationsResponseDTO{
+		List: uslices.MapFunc(applications, func(item entities.Application) dto.ApplicationItemResponseDTO {
+			return dto.ApplicationItemResponseDTO{
+				ApplicationID:              item.ApplicationID,
+				EducationalEstablishmentID: item.EducationalEstablishmentID,
+				SpecializationID:           item.SpecializationID,
+				TemplateID:                 item.TemplateID,
+				LastName:                   item.LastName,
+				Name:                       item.Name,
+				MiddleName:                 item.MiddleName,
+				PhoneNumber:                item.PhoneNumber,
+				TemplateData:               item.TemplateData,
+				ApplicationStatus:          item.ApplicationStatus,
+			}
+		}),
 	}, nil
 }

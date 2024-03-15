@@ -9,7 +9,8 @@ import (
 )
 
 type ApplicationsController interface {
-	CreateApplication(ctx context.Context, request dto.CreateApplicationRequestDTO) (dto.CreateApplicationResponseDTO, error)
+	CreateApplication(ctx context.Context, request dto.CreateApplicationRequestDTO) (dto.ApplicationItemResponseDTO, error)
+	GetAllApplications(ctx context.Context) (dto.ApplicationsResponseDTO, error)
 }
 
 type controller struct {

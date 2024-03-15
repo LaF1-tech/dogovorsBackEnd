@@ -35,3 +35,28 @@ VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING application_id
 		templateDataJSON)
 	return scanners.Id(row)
 }
+
+func (r *repository) GetAllApplications(ctx context.Context) ([]entities.Application, error) {
+	query := `
+SELECT application_id,
+       specialization_id, 
+       educational_establishment_id, 
+       template_id, 
+       last_name,
+       name,
+       middle_name,
+       phone_number,
+       template_data,
+       application_status from tbl_applications
+`
+	res, err := r.db.QueryContext(ctx, query)
+	var applications []entities.Application
+	for res.Next() {
+		application, err := r.scanApplications(res)
+		if err != nil {
+			return nil, err
+		}
+		applications = append(applications, application)
+	}
+	return applications, err
+}
