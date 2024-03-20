@@ -11,6 +11,8 @@ require (
 )
 
 require (
+	github.com/PuerkitoBio/goquery v1.8.1 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/bytedance/sonic v1.11.2 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.1 // indirect
@@ -21,6 +23,7 @@ require (
 	github.com/go-playground/validator/v10 v10.18.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/jackc/pgx/v5 v5.5.3 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
@@ -32,11 +35,19 @@ require (
 	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/sethvargo/go-retry v0.2.4 // indirect
+	github.com/speedata/bagme v0.0.0-20231122194752-d1948a8d651e // indirect
+	github.com/speedata/baseline-pdf v0.0.0-20231122102911-d3b0bd534820 // indirect
+	github.com/speedata/boxesandglue v0.0.0-20240119151805-b77b46eaf674 // indirect
+	github.com/speedata/css/scanner v0.0.0-20201005071706-2ed32c3ce553 // indirect
+	github.com/speedata/gofpdi v1.0.18 // indirect
+	github.com/speedata/hyphenation v1.0.1 // indirect
+	github.com/speedata/textlayout v0.0.0-20230827181055-b7ff752e85ae // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/arch v0.7.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
+	golang.org/x/image v0.7.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect

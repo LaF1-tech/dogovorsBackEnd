@@ -1,6 +1,10 @@
 package entities
 
-import "dogovorsBackEnd/internal/use/entities"
+import (
+	"time"
+
+	"dogovorsBackEnd/internal/use/entities"
+)
 
 type ApplicationStatus string
 
@@ -16,11 +20,25 @@ type Application struct {
 	ApplicationID              int
 	EducationalEstablishmentID int
 	SpecializationID           int
-	TemplateID                 int
 	LastName                   string
 	Name                       string
 	MiddleName                 string
 	PhoneNumber                string
-	TemplateData               map[string]any
+	Types                      map[string]map[string]any
 	ApplicationStatus          ApplicationStatus
+	ExecutionDate              time.Time
+	ExpirationDate             time.Time
+}
+type AggregatedApplication struct {
+	ApplicationID                int
+	EducationalEstablishmentName string
+	SpecializationName           string
+	LastName                     string
+	Name                         string
+	MiddleName                   string
+	PhoneNumber                  string
+	Types                        map[string]map[string]any
+	ApplicationStatus            ApplicationStatus
+	ExecutionDate                time.Time
+	ExpirationDate               time.Time
 }

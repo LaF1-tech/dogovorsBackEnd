@@ -6,7 +6,7 @@ create table tbl_contracts
     contract_id      serial primary key,
     student_id       integer                                                NULL,
     employee_id      integer                                                NULL,
-    application_type tp_application default ('Прохождение произв практики') NOT NULL,
+    application_type tp_application default ('Технологическая практика') NOT NULL,
     execution_date   timestamp                                              NOT NULL,
     expiration_date  timestamp                                              NOT NULL,
 

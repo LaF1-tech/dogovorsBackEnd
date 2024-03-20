@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 
+	"dogovorsBackEnd/internal/use/models"
 	"dogovorsBackEnd/internal/use/modules/applications/dto"
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
 	"dogovorsBackEnd/internal/use/utils/uslices"
@@ -16,13 +17,14 @@ func (c *controller) CreateApplication(ctx context.Context, request dto.CreateAp
 	application := entities.Application{
 		EducationalEstablishmentID: request.EducationalEstablishmentID,
 		SpecializationID:           request.SpecializationID,
-		TemplateID:                 request.TemplateID,
 		LastName:                   request.LastName,
 		Name:                       request.Name,
 		MiddleName:                 request.MiddleName,
 		PhoneNumber:                request.PhoneNumber,
-		TemplateData:               request.TemplateData,
+		Types:                      request.Types,
 		ApplicationStatus:          request.ApplicationStatus,
+		ExecutionDate:              request.ExecutionDate,
+		ExpirationDate:             request.ExpirationDate,
 	}
 
 	id, err := c.repository.CreateApplication(ctx, application)
@@ -36,36 +38,75 @@ func (c *controller) CreateApplication(ctx context.Context, request dto.CreateAp
 		ApplicationID:              application.ApplicationID,
 		EducationalEstablishmentID: application.EducationalEstablishmentID,
 		SpecializationID:           application.SpecializationID,
-		TemplateID:                 application.TemplateID,
 		LastName:                   application.LastName,
 		Name:                       application.Name,
 		MiddleName:                 application.MiddleName,
 		PhoneNumber:                application.PhoneNumber,
-		TemplateData:               application.TemplateData,
+		Types:                      application.Types,
 		ApplicationStatus:          application.ApplicationStatus,
+		ExecutionDate:              application.ExecutionDate,
+		ExpirationDate:             application.ExpirationDate,
 	}, nil
 }
 
-func (c *controller) GetAllApplications(ctx context.Context) (dto.ApplicationsResponseDTO, error) {
-	applications, err := c.repository.GetAllApplications(ctx)
-	if err != nil {
-		return dto.ApplicationsResponseDTO{}, err
+func (c *controller) GetAllApplications(ctx context.Context, user models.User) (dto.ApplicationsViewResponseDTO, error) {
+	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return dto.ApplicationsViewResponseDTO{}, err
 	}
 
-	return dto.ApplicationsResponseDTO{
-		List: uslices.MapFunc(applications, func(item entities.Application) dto.ApplicationItemResponseDTO {
-			return dto.ApplicationItemResponseDTO{
-				ApplicationID:              item.ApplicationID,
-				EducationalEstablishmentID: item.EducationalEstablishmentID,
-				SpecializationID:           item.SpecializationID,
-				TemplateID:                 item.TemplateID,
-				LastName:                   item.LastName,
-				Name:                       item.Name,
-				MiddleName:                 item.MiddleName,
-				PhoneNumber:                item.PhoneNumber,
-				TemplateData:               item.TemplateData,
-				ApplicationStatus:          item.ApplicationStatus,
+	applications, err := c.repository.GetAllApplications(ctx)
+	if err != nil {
+		return dto.ApplicationsViewResponseDTO{}, err
+	}
+
+	return dto.ApplicationsViewResponseDTO{
+		List: uslices.MapFunc(applications, func(item entities.AggregatedApplication) dto.ApplicationViewResponseDTO {
+			return dto.ApplicationViewResponseDTO{
+				ApplicationID:                item.ApplicationID,
+				EducationalEstablishmentName: item.EducationalEstablishmentName,
+				SpecializationName:           item.SpecializationName,
+				LastName:                     item.LastName,
+				Name:                         item.Name,
+				MiddleName:                   item.MiddleName,
+				PhoneNumber:                  item.PhoneNumber,
+				Types:                        item.Types,
+				ApplicationStatus:            item.ApplicationStatus,
+				ExecutionDate:                item.ExecutionDate,
+				ExpirationDate:               item.ExpirationDate,
 			}
 		}),
 	}, nil
+}
+
+func (c *controller) PatchApplicationByID(ctx context.Context, user models.User, request dto.PatchApplicationRequestDTO) error {
+	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return err
+	}
+
+	application := entities.Application{
+		ApplicationID:              request.ApplicationID,
+		EducationalEstablishmentID: request.EducationalEstablishmentID,
+		SpecializationID:           request.SpecializationID,
+		LastName:                   request.LastName,
+		Name:                       request.Name,
+		MiddleName:                 request.MiddleName,
+		PhoneNumber:                request.PhoneNumber,
+		Types:                      request.Types,
+		ApplicationStatus:          request.ApplicationStatus,
+		ExecutionDate:              request.ExecutionDate,
+		ExpirationDate:             request.ExpirationDate,
+	}
+
+	err := c.repository.PatchApplicationByID(ctx, application)
+	if err != nil {
+		return err
+	}
+
+	if application.ApplicationStatus == entities.ApplicationStatusAccepted {
+		if err = c.acceptApplication(ctx, user, request); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

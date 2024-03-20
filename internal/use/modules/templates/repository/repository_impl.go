@@ -24,7 +24,7 @@ SELECT template_id, template_name from tbl_templates
 
 func (r *repository) GetTemplateByID(ctx context.Context, id int) (entities.Template, error) {
 	query := `
-SELECT template_id, template_name, template_text, necessary_data, created_at, updated_at from tbl_templates WHERE template_id = $1
+SELECT template_id, template_name, template_content, template_styles, necessary_data from tbl_templates WHERE template_id = $1
 `
 	res := r.db.QueryRowContext(ctx, query, id)
 	return r.scanTemplate(res)
@@ -32,7 +32,7 @@ SELECT template_id, template_name, template_text, necessary_data, created_at, up
 
 func (r *repository) GetFullTemplateDataByContractID(ctx context.Context, contractID int) (entities.FullTemplate, error) {
 	query := `
-SELECT contract_id, template_name, template_text, necessary_data, data FROM vw_full_templates_data WHERE contract_id = $1
+SELECT contract_id, template_name, template_content, template_styles, necessary_data, data FROM vw_full_templates_data WHERE contract_id = $1
 `
 	res := r.db.QueryRowContext(ctx, query, contractID)
 	return r.scanFullTemplate(res)

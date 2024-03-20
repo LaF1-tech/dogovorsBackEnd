@@ -16,10 +16,11 @@ const (
 type Template struct {
 	entities.Timed
 
-	TemplateID    int
-	TemplateName  string
-	TemplateText  string
-	NecessaryData map[string]TemplateVarType
+	TemplateID      int
+	TemplateName    string
+	TemplateContent string
+	TemplateStyles  string
+	NecessaryData   map[string]TemplateVarType
 }
 
 type TemplatePreview struct {
@@ -28,9 +29,10 @@ type TemplatePreview struct {
 }
 
 type FullTemplate struct {
-	ContractID    int
-	TemplateName  string
-	TemplateText  string
-	NecessaryData map[string]TemplateVarType
-	Data          map[string]any
+	ContractID      int
+	TemplateName    string
+	TemplateContent string
+	TemplateStyles  string
+	NecessaryData   map[string]TemplateVarType
+	Data            map[string]any
 }

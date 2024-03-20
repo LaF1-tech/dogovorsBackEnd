@@ -2,76 +2,93 @@
 -- +goose StatementBegin
 
 insert into tbl_templates(template_name,
-                          template_text,
+                          template_content,
+                          template_styles,
                           necessary_data)
-values ('Технологическая практика', '<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Договор на технологическую практику</title>
-</head>
-<body>
+values ('Технологическая практика', '<body>
+<h1>Договор на технологическую практику</h1>
 <div>
-    <table border="1">
-        <thead>
-        <tr><td>Hello</td><td>World</td></tr>
-        <tr><td>World</td><td>Hello</td></tr>
-        </thead>
-        <tbody>
-        <tr><td>WOrld</td><td>Hello</td></tr>
-        </tbody>
-    </table>
+    Студента {{ .student_last_name }} {{ .student_name }} {{ .student_middle_name }} <br>
+    Обучающемуся в {{ .educational_establishment_name }} <br>
+    По специальности {{ .specialization_name }} <br>
+    Зачислить на технологическую практику в ОАО "Планар" <br>
+    Дата исполнения: {{ .execution_date }} <br>
+    Дата окончания срока действия: {{ .expiration_date }} <br>
 </div>
-</body>
-</html>', 'a=>string,b=>integer,c=>date,d=>time,e=>datetime,f=>boolean'::hstore),
-       ('Преддипломная практика', '<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Договор на преддипломную практику</title>
-</head>
-<body>
+<hr>
+<div>Одобрил: {{ .employee_last_name }} {{ .employee_first_name }}</div>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>М.П.</div>
+</body>', '@font-face {
+    font-family: Roboto;
+    src: url("fonts/RobotoFlex-Regular.ttf");
+}
+
+body {
+    font-family: Roboto;
+}', null),
+       ('Преддипломная практика', '<body>
+<h1>Договор на преддипломную практику</h1>
 <div>
-    <table border="1">
-        <thead>
-        <tr><td>Hello</td><td>World</td></tr>
-        <tr><td>World</td><td>Hello</td></tr>
-        </thead>
-        <tbody>
-        <tr><td>WOrld</td><td>Hello</td></tr>
-        </tbody>
-    </table>
+    Студента {{ .student_last_name }} {{ .student_name }} {{ .student_middle_name }} <br>
+    Обучающемуся в {{ .educational_establishment_name }} <br>
+    По специальности {{ .specialization_name }} <br>
+    Зачислить на преддпиломную практику в ОАО "Планар" <br>
+    <br>
+    <hr>
+    Дата исполнения: {{ .execution_date }} <br>
+    Дата окончания срока действия: {{ .expiration_date }} <br>
 </div>
-</body>
-</html>', 'a=>string,b=>integer'::hstore),
-       ('Трудоустройство', '<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Договор на трудоустройство</title>
-</head>
-<body>
+<hr>
+<div>Одобрил: {{ .employee_last_name }} {{ .employee_first_name }}</div>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>М.П.</div>
+</body>', '@font-face {
+    font-family: Roboto;
+    src: url("fonts/RobotoFlex-Regular.ttf");
+}
+
+body {
+    font-family: Roboto;
+}', null),
+       ('Трудоустройство', '<body>
+<h1>Договор на трудоустройство</h1>
 <div>
-    <table border="1">
-        <thead>
-        <tr><td>Hello</td><td>World</td></tr>
-        <tr><td>World</td><td>Hello</td></tr>
-        </thead>
-        <tbody>
-        <tr><td>WOrld</td><td>Hello</td></tr>
-        </tbody>
-    </table>
+    Студента {{ .student_last_name }} {{ .student_name }} {{ .student_middle_name }} <br>
+    Обучающемуся в {{ .educational_establishment_name }} <br>
+    По специальности {{ .specialization_name }} <br>
+    Зачислить в сотрудники ОАО "Планар" после окончания обучения<br>
+    <br>
+    <hr>
+    Дата исполнения: {{ .execution_date }} <br>
+    Дата окончания срока действия: {{ .expiration_date }} <br>
 </div>
-</body>
-</html>', 'b=>integer'::hstore)
+<hr>
+<div>Одобрил: {{ .employee_last_name }} {{ .employee_first_name }}</div>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div>М.П.</div>
+</body>', '@font-face {
+    font-family: Roboto;
+    src: url("fonts/RobotoFlex-Regular.ttf");
+}
+
+body {
+    font-family: Roboto;
+}', null)
 
 -- +goose StatementEnd

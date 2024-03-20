@@ -14,15 +14,24 @@ func (r *repository) scanTemplatePreview(row *sql.Rows) (preview entities.Templa
 
 func (r *repository) scanTemplate(row *sql.Row) (template entities.Template, err error) {
 	var data hstore.Hstore
+	var templateStyles *string
 
 	err = row.Scan(
 		&template.TemplateID,
 		&template.TemplateName,
-		&template.TemplateText,
+		&template.TemplateContent,
+		&templateStyles,
 		&data,
-		&template.CreatedAt,
-		&template.UpdatedAt,
 	)
+	if err != nil {
+		return entities.Template{}, err
+	}
+
+	if templateStyles == nil {
+		template.TemplateStyles = ""
+	} else {
+		template.TemplateStyles = *templateStyles
+	}
 
 	template.NecessaryData = make(map[string]entities.TemplateVarType)
 
@@ -35,14 +44,25 @@ func (r *repository) scanTemplate(row *sql.Row) (template entities.Template, err
 
 func (r *repository) scanFullTemplate(row *sql.Row) (fullTemplate entities.FullTemplate, err error) {
 	var necessaryData hstore.Hstore
+	var templateStyles *string
 
 	err = row.Scan(
 		&fullTemplate.ContractID,
 		&fullTemplate.TemplateName,
-		&fullTemplate.TemplateText,
+		&fullTemplate.TemplateContent,
+		&templateStyles,
 		&necessaryData,
 		&fullTemplate.Data,
 	)
+	if err != nil {
+		return entities.FullTemplate{}, err
+	}
+
+	if templateStyles == nil {
+		fullTemplate.TemplateStyles = ""
+	} else {
+		fullTemplate.TemplateStyles = *templateStyles
+	}
 
 	for k, v := range necessaryData.Map {
 		fullTemplate.NecessaryData[k] = entities.TemplateVarType(v.String)

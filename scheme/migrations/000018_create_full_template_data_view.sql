@@ -4,7 +4,8 @@
 create view vw_full_templates_data as
 select tc.contract_id,
        tbl_templates.template_name,
-       tbl_templates.template_text,
+       tbl_templates.template_content,
+       tbl_templates.template_styles,
        tbl_templates.necessary_data,
        jsonb_build_object(
                'application_type', tc.application_type,
@@ -23,9 +24,8 @@ from tbl_templates
          inner join public.tbl_contract_data_registry tcdr on tbl_templates.template_id = tcdr.template_id
          inner join public.tbl_contracts tc on tc.contract_id = tcdr.contract_id
          inner join public.tbl_students ts on ts.student_id = tc.student_id
-         inner join public.tbl_educational_establishments tee
-                    on tee.educational_establishment_id = ts.educational_establishment_id
          inner join public.tbl_specializations t on t.specialization_id = ts.specialization_id
+         inner join public.tbl_educational_establishments tee on tee.educational_establishment_id = ts.educational_establishment_id
          inner join public.tbl_employees te on te.employee_id = tc.employee_id;
 
 -- +goose StatementEnd

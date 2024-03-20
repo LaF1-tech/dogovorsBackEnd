@@ -12,6 +12,7 @@ type ApplicationsHandler interface {
 
 	CreateApplication(ctx *gin.Context)
 	GetApplications(ctx *gin.Context)
+	PatchApplicationByID(ctx *gin.Context)
 }
 
 type handler struct {
