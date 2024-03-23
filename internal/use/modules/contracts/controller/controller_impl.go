@@ -2,8 +2,11 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"github.com/speedata/bagme/document"
 	"github.com/speedata/boxesandglue/backend/bag"
+	"strings"
+	"time"
 
 	"dogovorsBackEnd/internal/use/models"
 	"dogovorsBackEnd/internal/use/modules/contracts/dto"
@@ -94,7 +97,11 @@ func (c *controller) GenerateContractPDF(ctx context.Context, user models.User, 
 	if err != nil {
 		return "", err
 	}
-	d, err := document.New("out.pdf")
+
+	filename := fmt.Sprintf("./contracts/[%d] %s - %s [%s].pdf", template.ContractID, template.TemplateName, template.Data["student_name"], time.Now().Format(time.DateTime))
+	filename = strings.ReplaceAll(filename, ":", "-")
+
+	d, err := document.New(filename)
 	if err != nil {
 		return "", err
 	}
@@ -111,5 +118,5 @@ func (c *controller) GenerateContractPDF(ctx context.Context, user models.User, 
 		return "", err
 	}
 
-	return html, d.Finish()
+	return filename, d.Finish()
 }

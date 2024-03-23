@@ -61,10 +61,12 @@ func (h *handler) GenerateContractPDF(ctx *gin.Context) {
 		_ = ctx.Error(err)
 		return
 	}
-	r, err := h.controller.GenerateContractPDF(ctx, user, id)
+
+	filename, err := h.controller.GenerateContractPDF(ctx, user, id)
 	if err != nil {
 		_ = ctx.Error(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, r)
+
+	ctx.File(filename)
 }
