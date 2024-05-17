@@ -2,7 +2,7 @@ package entities
 
 import "dogovorsBackEnd/internal/use/entities"
 
-type EducationalEstablishments struct {
+type EducationalEstablishment struct {
 	entities.Timed
 
 	EducationalEstablishmentID           int

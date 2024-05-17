@@ -40,7 +40,7 @@ func (h *handler) Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetCookie("token", response.Token, 3600, "/", "", false, false)
+	ctx.SetCookie("token", response.Token, 86400, "/", "", false, false)
 	ctx.JSON(http.StatusOK, response)
 }
 

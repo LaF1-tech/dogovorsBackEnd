@@ -9,7 +9,11 @@ import (
 
 type EducationalEstablishmentsHandler interface {
 	http.IRoutes
-	GetEducationalEstablishments(ctx *gin.Context)
+	CreateEducationalEstablishment(ctx *gin.Context)
+	GetSpecializations(ctx *gin.Context)
+	GetEducationalEstablishmentByID(ctx *gin.Context)
+	PatchEducationalEstablishment(ctx *gin.Context)
+	DeleteEducationalEstablishmentByID(ctx *gin.Context)
 }
 
 type handler struct {

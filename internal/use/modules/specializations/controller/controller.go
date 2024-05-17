@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"dogovorsBackEnd/internal/use/models"
 
 	"dogovorsBackEnd/internal/use/modules/specializations/controller/validator"
 	"dogovorsBackEnd/internal/use/modules/specializations/dto"
@@ -9,7 +10,11 @@ import (
 )
 
 type SpecializationsController interface {
+	CreateSpecialization(ctx context.Context, user models.User, request dto.CreateSpecializationRequestDTO) (dto.SpecializationItemResponseDTO, error)
 	GetSpecializations(ctx context.Context) (dto.SpecializationsResponseDTO, error)
+	GetSpecializationByID(ctx context.Context, id int) (dto.SpecializationItemResponseDTO, error)
+	PatchSpecializationByID(ctx context.Context, user models.User, request dto.PatchSpecializationRequestDTO) error
+	DeleteSpecializationByID(ctx context.Context, user models.User, id int) error
 }
 
 type controller struct {

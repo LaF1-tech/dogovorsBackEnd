@@ -1,8 +1,6 @@
 package dto
 
 import (
-	"time"
-
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
 )
 
@@ -13,10 +11,9 @@ type CreateApplicationRequestDTO struct {
 	Name                       string                     `json:"name,omitempty"`
 	MiddleName                 string                     `json:"middle_name,omitempty"`
 	PhoneNumber                string                     `json:"phone_number,omitempty"`
-	Types                      map[string]map[string]any  `json:"types,omitempty"`
+	Types                      map[int]map[string]any     `json:"types,omitempty"`
 	ApplicationStatus          entities.ApplicationStatus `json:"application_status,omitempty"`
-	ExecutionDate              time.Time                  `json:"execution_date,omitempty"`
-	ExpirationDate             time.Time                  `json:"expiration_date,omitempty"`
+	DateRange                  entities.DateRange         `json:"dateRange,omitempty"`
 }
 
 type PatchApplicationRequestDTO struct {
@@ -27,8 +24,7 @@ type PatchApplicationRequestDTO struct {
 	Name                       string                     `json:"name,omitempty"`
 	MiddleName                 string                     `json:"middle_name,omitempty"`
 	PhoneNumber                string                     `json:"phone_number,omitempty"`
-	Types                      map[string]map[string]any  `json:"types,omitempty"`
+	Types                      map[int]map[string]any     `json:"types,omitempty"`
 	ApplicationStatus          entities.ApplicationStatus `json:"application_status,omitempty"`
-	ExecutionDate              time.Time                  `json:"execution_date,omitempty"`
-	ExpirationDate             time.Time                  `json:"expiration_date,omitempty"`
+	DateRange                  entities.DateRange         `json:"dateRange,omitempty"`
 }

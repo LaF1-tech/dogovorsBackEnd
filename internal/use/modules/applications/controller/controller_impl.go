@@ -2,7 +2,6 @@ package controller
 
 import (
 	"context"
-
 	"dogovorsBackEnd/internal/use/models"
 	"dogovorsBackEnd/internal/use/modules/applications/dto"
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
@@ -23,8 +22,8 @@ func (c *controller) CreateApplication(ctx context.Context, request dto.CreateAp
 		PhoneNumber:                request.PhoneNumber,
 		Types:                      request.Types,
 		ApplicationStatus:          request.ApplicationStatus,
-		ExecutionDate:              request.ExecutionDate,
-		ExpirationDate:             request.ExpirationDate,
+		ExecutionDate:              request.DateRange.Start,
+		ExpirationDate:             request.DateRange.End,
 	}
 
 	id, err := c.repository.CreateApplication(ctx, application)
@@ -93,8 +92,8 @@ func (c *controller) PatchApplicationByID(ctx context.Context, user models.User,
 		PhoneNumber:                request.PhoneNumber,
 		Types:                      request.Types,
 		ApplicationStatus:          request.ApplicationStatus,
-		ExecutionDate:              request.ExecutionDate,
-		ExpirationDate:             request.ExpirationDate,
+		ExecutionDate:              request.DateRange.Start,
+		ExpirationDate:             request.DateRange.End,
 	}
 
 	err := c.repository.PatchApplicationByID(ctx, application)

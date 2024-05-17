@@ -54,7 +54,10 @@ func (r *repository) DeleteUserByID(ctx context.Context, userID int) error {
 DELETE FROM tbl_employees WHERE employee_id = $1
 `
 	_, err := r.db.ExecContext(ctx, query, userID)
-	return err
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *repository) GetUserByToken(ctx context.Context, token string) (entities.User, error) {

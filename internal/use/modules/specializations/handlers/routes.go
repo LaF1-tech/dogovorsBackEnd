@@ -7,7 +7,11 @@ import (
 )
 
 func (h *handler) Routes(group *gin.RouterGroup, middlewares *http.Middlewares) {
-	applicationsGroup := group.Group("specializations")
+	specializationsGroup := group.Group("specializations")
 
-	applicationsGroup.GET("", h.GetEducationalEstablishments)
+	specializationsGroup.POST("", middlewares.Auth, h.CreateSpecialization)
+	specializationsGroup.GET("", h.GetSpecializations)
+	specializationsGroup.GET(":id", h.GetSpecializationByID)
+	specializationsGroup.PATCH("", middlewares.Auth, h.PatchSpecialization)
+	specializationsGroup.DELETE(":id", middlewares.Auth, h.DeleteSpecializationByID)
 }

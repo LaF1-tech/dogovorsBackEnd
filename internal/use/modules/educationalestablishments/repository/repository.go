@@ -8,7 +8,11 @@ import (
 )
 
 type EducationalEstablishmentsRepository interface {
-	GetEducationalEstablishments(ctx context.Context) ([]entities.EducationalEstablishments, error)
+	CreateEducationalEstablishment(ctx context.Context, establishment entities.EducationalEstablishment) (int, error)
+	GetEducationalEstablishments(ctx context.Context) ([]entities.EducationalEstablishment, error)
+	GetEducationalEstablishmentByID(ctx context.Context, id int) (entities.EducationalEstablishment, error)
+	PatchEducationalEstablishmentByID(ctx context.Context, establishment entities.EducationalEstablishment) error
+	DeleteEducationalEstablishmentByID(ctx context.Context, id int) error
 }
 
 type repository struct {

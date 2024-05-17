@@ -10,8 +10,11 @@ import (
 type TemplateHandler interface {
 	http.IRoutes
 
+	CreateTemplate(ctx *gin.Context)
 	GetAllTemplatesPreview(ctx *gin.Context)
 	GetTemplateByID(ctx *gin.Context)
+	PatchTemplateByID(ctx *gin.Context)
+	DeleteTemplateByID(ctx *gin.Context)
 }
 
 type handler struct {

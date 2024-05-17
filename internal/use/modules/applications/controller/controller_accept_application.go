@@ -2,8 +2,6 @@ package controller
 
 import (
 	"context"
-	"strconv"
-
 	"dogovorsBackEnd/internal/use/models"
 	"dogovorsBackEnd/internal/use/modules/applications/dto"
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
@@ -30,8 +28,7 @@ func (c *controller) acceptApplication(ctx context.Context, user models.User, re
 		return err
 	}
 
-	for idStr, data := range application.Types {
-		id, err := strconv.Atoi(idStr)
+	for id, data := range application.Types {
 
 		contract := contracts.Contract{
 			StudentID:       studentID,
