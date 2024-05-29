@@ -8,7 +8,7 @@ select tc.contract_id,
        tbl_templates.template_styles,
        tbl_templates.necessary_data,
        jsonb_build_object(
-               'application_type', tc.application_type,
+               'template_id', tc.template_id,
                'execution_date', tc.execution_date,
                'expiration_date', tc.expiration_date,
                'student_last_name', ts.student_last_name,

@@ -119,10 +119,10 @@ WHERE application_id = $9
 
 func (r *repository) CreateContract(ctx context.Context, contract contracts.Contract) (int, error) {
 	query := `
-INSERT INTO tbl_contracts (student_id, employee_id, application_type, execution_date, expiration_date) VALUES ($1,$2,$3,$4,$5) RETURNING contract_id
+INSERT INTO tbl_contracts (student_id, employee_id, template_id, execution_date, expiration_date) VALUES ($1,$2,$3,$4,$5) RETURNING contract_id
 `
 
-	row := r.db.QueryRowContext(ctx, query, contract.StudentID, contract.EmployeeID, contract.ApplicationType, contract.ExecutionDate, contract.ExpirationDate)
+	row := r.db.QueryRowContext(ctx, query, contract.StudentID, contract.EmployeeID, contract.TemplateId, contract.ExecutionDate, contract.ExpirationDate)
 	return scanners.Id(row)
 }
 

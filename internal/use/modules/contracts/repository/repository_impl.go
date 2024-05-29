@@ -13,7 +13,7 @@ SELECT contract_id,
        student_last_name,
        employee_first_name, 
        employee_last_name, 
-       application_type, 
+       template_name, 
        execution_date, 
        expiration_date from vw_full_contract_data
 `
@@ -34,19 +34,19 @@ func (r *repository) GetContractByID(ctx context.Context, id int) (entities.Cont
 SELECT contract_id,
        student_id, 
        employee_id, 
-       application_type, 
+       template_id, 
        execution_date,
        expiration_date from tbl_contracts WHERE contract_id=$1
 `
 	response := r.db.QueryRowContext(ctx, query, id)
-	return r.scanApplication(response)
+	return r.scanContract(response)
 }
 
 func (r *repository) PatchContractByID(ctx context.Context, contract entities.Contract) error {
 	query := `UPDATE tbl_contracts
 SET student_id=COALESCE(NULLIF($1, 0), student_id),
     employee_id=COALESCE(NULLIF($2, 0), employee_id),
-    application_type=COALESCE(NULLIF($3, '')::tp_application, application_type),
+    template_id=COALESCE(NULLIF($3,0), template_id),
     execution_date=COALESCE(NULLIF($4, date('0000-00-00'))::timestamp, execution_date),
     expiration_date=COALESCE(NULLIF($5, date('0000-00-00'))::timestamp, expiration_date)
 WHERE contract_id = $6
@@ -54,7 +54,7 @@ WHERE contract_id = $6
 	_, err := r.db.ExecContext(ctx, query,
 		contract.StudentID,
 		contract.EmployeeID,
-		contract.ApplicationType,
+		contract.TemplateId,
 		contract.ExecutionDate,
 		contract.ExpirationDate,
 		contract.ContractID)

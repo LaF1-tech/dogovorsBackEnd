@@ -16,7 +16,7 @@ func (r *repository) scanAggregatedContract(row *sql.Rows) (contract entities.Ag
 		&contract.StudentLastName,
 		&contract.EmployeeFirstName,
 		&contract.EmployeeLastName,
-		&contract.ApplicationType,
+		&contract.TemplateName,
 		&contract.ExecutionDate,
 		&contract.ExpirationDate)
 	if err != nil {
@@ -25,13 +25,13 @@ func (r *repository) scanAggregatedContract(row *sql.Rows) (contract entities.Ag
 	return
 }
 
-func (r *repository) scanApplication(row *sql.Row) (contract entities.Contract, err error) {
+func (r *repository) scanContract(row *sql.Row) (contract entities.Contract, err error) {
 
 	err = row.Scan(
 		&contract.ContractID,
 		&contract.StudentID,
 		&contract.EmployeeID,
-		&contract.ApplicationType,
+		&contract.TemplateId,
 		&contract.ExecutionDate,
 		&contract.ExpirationDate)
 	if err != nil {

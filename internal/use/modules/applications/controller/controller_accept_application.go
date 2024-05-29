@@ -29,13 +29,12 @@ func (c *controller) acceptApplication(ctx context.Context, user models.User, re
 	}
 
 	for id, data := range application.Types {
-
 		contract := contracts.Contract{
-			StudentID:       studentID,
-			EmployeeID:      user.UserID,
-			ApplicationType: contracts.ApplicationTypeById(id),
-			ExecutionDate:   application.ExecutionDate,
-			ExpirationDate:  application.ExpirationDate,
+			StudentID:      studentID,
+			EmployeeID:     user.UserID,
+			TemplateId:     id,
+			ExecutionDate:  application.ExecutionDate,
+			ExpirationDate: application.ExpirationDate,
 		}
 
 		contractID, err := c.repository.CreateContract(ctx, contract)

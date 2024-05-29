@@ -33,7 +33,7 @@ func (c *controller) GetAllContracts(ctx context.Context, user models.User) (dto
 				StudentLastName:   item.StudentLastName,
 				EmployeeFirstName: item.EmployeeFirstName,
 				EmployeeLastName:  item.EmployeeLastName,
-				ApplicationType:   item.ApplicationType,
+				TemplateName:      item.TemplateName,
 				ExecutionDate:     item.ExecutionDate,
 				ExpirationDate:    item.ExpirationDate,
 			}
@@ -50,12 +50,12 @@ func (c *controller) GetContractByID(ctx context.Context, user models.User, id i
 		return dto.ContractItemResponseDTO{}, err
 	}
 	return dto.ContractItemResponseDTO{
-		ContractID:      contract.ContractID,
-		StudentID:       contract.StudentID,
-		EmployeeID:      contract.EmployeeID,
-		ApplicationType: contract.ApplicationType,
-		ExecutionDate:   contract.ExecutionDate,
-		ExpirationDate:  contract.ExpirationDate,
+		ContractID:     contract.ContractID,
+		StudentID:      contract.StudentID,
+		EmployeeID:     contract.EmployeeID,
+		TemplateID:     contract.TemplateId,
+		ExecutionDate:  contract.ExecutionDate,
+		ExpirationDate: contract.ExpirationDate,
 	}, nil
 }
 
@@ -64,12 +64,12 @@ func (c *controller) PatchContractByID(ctx context.Context, user models.User, re
 		return err
 	}
 	contract := entities.Contract{
-		ContractID:      request.ContractID,
-		StudentID:       request.StudentID,
-		EmployeeID:      request.EmployeeID,
-		ApplicationType: request.ApplicationType,
-		ExecutionDate:   request.ExecutionDate,
-		ExpirationDate:  request.ExpirationDate,
+		ContractID:     request.ContractID,
+		StudentID:      request.StudentID,
+		EmployeeID:     request.EmployeeID,
+		TemplateId:     request.EmployeeID,
+		ExecutionDate:  request.ExecutionDate,
+		ExpirationDate: request.ExpirationDate,
 	}
 	err := c.repository.PatchContractByID(ctx, contract)
 	if err != nil {
@@ -111,9 +111,9 @@ func (c *controller) GenerateContractPDF(ctx context.Context, user models.User, 
 	if err = d.Frontend.LoadIncludedFonts(); err != nil {
 		return "", err
 	}
-	wd := bag.MustSp("280pt")
-	colText := bag.MustSp("140pt")
-	rowText := bag.MustSp("23cm")
+	wd := bag.MustSp("580pt")
+	colText := bag.MustSp("2pt")
+	rowText := bag.MustSp("5cm")
 	if err = d.OutputAt(html, wd, colText, rowText); err != nil {
 		return "", err
 	}
