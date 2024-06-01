@@ -18,6 +18,9 @@ SELECT contract_id,
        expiration_date from vw_full_contract_data
 `
 	res, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
 	var contracts []entities.AggregatedContract
 	for res.Next() {
 		contract, err := r.scanAggregatedContract(res)
@@ -40,6 +43,29 @@ SELECT contract_id,
 `
 	response := r.db.QueryRowContext(ctx, query, id)
 	return r.scanContract(response)
+}
+
+func (r *repository) GetPeriodAndCountForChart(ctx context.Context) ([]entities.ContractChart, error) {
+	query := `SELECT DATE_TRUNC('month', execution_date) AS period,
+       				 COUNT(*)                            AS contract_count
+FROM tbl_contracts
+GROUP BY period
+ORDER BY period;
+`
+	response, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	var data []entities.ContractChart
+	for response.Next() {
+		contractChartData, err := r.scanChartContract(response)
+		if err != nil {
+			return nil, err
+		}
+		data = append(data, contractChartData)
+	}
+	return data, err
+
 }
 
 func (r *repository) PatchContractByID(ctx context.Context, contract entities.Contract) error {

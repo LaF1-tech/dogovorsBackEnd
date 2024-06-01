@@ -12,6 +12,8 @@ import (
 type ContractsController interface {
 	GetAllContracts(ctx context.Context, user models.User) (dto.ContractsViewResponseDTO, error)
 	GetContractByID(ctx context.Context, user models.User, id int) (dto.ContractItemResponseDTO, error)
+	GetPeriodAndCountForChart(ctx context.Context, user models.User) (dto.ContractsChartResponseDTO, error)
+
 	PatchContractByID(ctx context.Context, user models.User, request dto.PatchContractRequestDTO) error
 
 	GenerateContractPDF(ctx context.Context, user models.User, id int) (string, error)

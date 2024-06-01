@@ -41,6 +41,18 @@ func (r *repository) scanContract(row *sql.Row) (contract entities.Contract, err
 	return
 }
 
+func (r *repository) scanChartContract(row *sql.Rows) (contract entities.ContractChart, err error) {
+	err = row.Scan(
+		&contract.Period,
+		&contract.ContractCount,
+	)
+	if err != nil {
+		return entities.ContractChart{}, err
+	}
+
+	return
+}
+
 func (r *repository) scanTemplate(row *sql.Row) (template tEntities.Template, err error) {
 	var data hstore.Hstore
 	var templateStyles *string

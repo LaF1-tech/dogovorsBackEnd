@@ -11,8 +11,10 @@ type ContractsHandler interface {
 	http.IRoutes
 
 	GetAllContracts(ctx *gin.Context)
-	PatchContractByID(ctx *gin.Context)
 	GetContractByID(ctx *gin.Context)
+	GetContractChartData(ctx *gin.Context)
+
+	PatchContractByID(ctx *gin.Context)
 
 	GenerateContractPDF(ctx *gin.Context)
 }

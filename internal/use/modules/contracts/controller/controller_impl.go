@@ -59,6 +59,24 @@ func (c *controller) GetContractByID(ctx context.Context, user models.User, id i
 	}, nil
 }
 
+func (c *controller) GetPeriodAndCountForChart(ctx context.Context, user models.User) (dto.ContractsChartResponseDTO, error) {
+	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return dto.ContractsChartResponseDTO{}, err
+	}
+	contractsChart, err := c.repository.GetPeriodAndCountForChart(ctx)
+	if err != nil {
+		return dto.ContractsChartResponseDTO{}, err
+	}
+	return dto.ContractsChartResponseDTO{
+		List: uslices.MapFunc(contractsChart, func(item entities.ContractChart) dto.ContractChartResponseDTO {
+			return dto.ContractChartResponseDTO{
+				Period:        item.Period,
+				ContractCount: item.ContractCount,
+			}
+		}),
+	}, nil
+}
+
 func (c *controller) PatchContractByID(ctx context.Context, user models.User, request dto.PatchContractRequestDTO) error {
 	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
 		return err
