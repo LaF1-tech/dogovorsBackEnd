@@ -45,29 +45,6 @@ SELECT contract_id,
 	return r.scanContract(response)
 }
 
-func (r *repository) GetPeriodAndCountForChart(ctx context.Context) ([]entities.ContractChart, error) {
-	query := `SELECT DATE_TRUNC('month', execution_date) AS period,
-       				 COUNT(*)                            AS contract_count
-FROM tbl_contracts
-GROUP BY period
-ORDER BY period;
-`
-	response, err := r.db.QueryContext(ctx, query)
-	if err != nil {
-		return nil, err
-	}
-	var data []entities.ContractChart
-	for response.Next() {
-		contractChartData, err := r.scanChartContract(response)
-		if err != nil {
-			return nil, err
-		}
-		data = append(data, contractChartData)
-	}
-	return data, err
-
-}
-
 func (r *repository) PatchContractByID(ctx context.Context, contract entities.Contract) error {
 	query := `UPDATE tbl_contracts
 SET student_id=COALESCE(NULLIF($1, 0), student_id),

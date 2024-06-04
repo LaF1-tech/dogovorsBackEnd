@@ -12,7 +12,6 @@ type ContractsHandler interface {
 
 	GetAllContracts(ctx *gin.Context)
 	GetContractByID(ctx *gin.Context)
-	GetContractChartData(ctx *gin.Context)
 
 	PatchContractByID(ctx *gin.Context)
 

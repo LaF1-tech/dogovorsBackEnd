@@ -28,8 +28,3 @@ type AggregatedContract struct {
 	ExecutionDate     time.Time
 	ExpirationDate    time.Time
 }
-
-type ContractChart struct {
-	Period        time.Time
-	ContractCount int
-}

@@ -11,7 +11,6 @@ import (
 type ContractsRepository interface {
 	GetAllContracts(ctx context.Context) ([]entities.AggregatedContract, error)
 	GetContractByID(ctx context.Context, id int) (entities.Contract, error)
-	GetPeriodAndCountForChart(ctx context.Context) ([]entities.ContractChart, error)
 
 	PatchContractByID(ctx context.Context, contract entities.Contract) error
 

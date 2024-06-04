@@ -37,17 +37,6 @@ func (h *handler) GetContractByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, preview)
 }
 
-func (h *handler) GetContractChartData(ctx *gin.Context) {
-	user := utils.GetUser(ctx)
-
-	dataForChart, err := h.controller.GetPeriodAndCountForChart(ctx, user)
-	if err != nil {
-		_ = ctx.Error(err)
-		return
-	}
-	ctx.JSON(http.StatusOK, dataForChart)
-}
-
 func (h *handler) PatchContractByID(ctx *gin.Context) {
 	user := utils.GetUser(ctx)
 	var request dto.PatchContractRequestDTO

@@ -24,15 +24,6 @@ type ContractAggregatedResponseDTO struct {
 	ExpirationDate    time.Time `json:"expiration_date"`
 }
 
-type ContractChartResponseDTO struct {
-	Period        time.Time `json:"period,omitempty"`
-	ContractCount int       `json:"contract_count,omitempty"`
-}
-
-type ContractsChartResponseDTO struct {
-	List []ContractChartResponseDTO `json:"list,omitempty"`
-}
-
 type ContractsViewResponseDTO struct {
 	List []ContractAggregatedResponseDTO `json:"list,omitempty"`
 }
