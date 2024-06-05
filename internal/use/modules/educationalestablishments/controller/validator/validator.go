@@ -1,6 +1,8 @@
 package validator
 
 import (
+	"context"
+	"dogovorsBackEnd/internal/use/modules/educationalestablishments/dto"
 	"errors"
 	"regexp"
 )
@@ -10,6 +12,8 @@ var (
 )
 
 type EducationalEstablishmentValidator interface {
+	CreateEducationalEstablishmentRequest(ctx context.Context, dto dto.CreateEducationalEstablishmentRequestDTO) error
+	PatchEducationalEstablishmentRequest(ctx context.Context, dto dto.PatchEducationalEstablishmentRequestDTO) error
 }
 
 type validator struct {

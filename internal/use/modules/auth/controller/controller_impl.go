@@ -71,7 +71,7 @@ func (c *controller) Login(ctx context.Context, request dto.LoginRequestDTO) (dt
 
 	user, err := c.repository.GetUserByUsername(ctx, request.Username)
 	if err != nil {
-		return dto.LoginResponseDTO{}, err
+		return dto.LoginResponseDTO{}, ErrInvalidUsername
 	}
 
 	if !hash.CompareHashAndPassword(user.Password, request.Password) {

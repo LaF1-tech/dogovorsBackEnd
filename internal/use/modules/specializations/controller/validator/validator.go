@@ -1,6 +1,8 @@
 package validator
 
 import (
+	"context"
+	"dogovorsBackEnd/internal/use/modules/specializations/dto"
 	"errors"
 	"regexp"
 )
@@ -10,6 +12,8 @@ var (
 )
 
 type SpecializationsValidator interface {
+	CreateSpecializationRequest(ctx context.Context, request dto.CreateSpecializationRequestDTO) error
+	PatchSpecializationRequest(ctx context.Context, request dto.PatchSpecializationRequestDTO) error
 }
 
 type validator struct {

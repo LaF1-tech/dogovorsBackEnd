@@ -12,6 +12,7 @@ import (
 
 var (
 	ErrInvalidPassword = errors.New("invalid password error")
+	ErrInvalidUsername = errors.New("invalid username error")
 	ErrForbidden       = errors.New("forbidden")
 )
 

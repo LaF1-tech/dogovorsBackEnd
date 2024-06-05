@@ -14,6 +14,10 @@ func (c *controller) CreateTemplate(ctx context.Context, user models.User, reque
 		return dto.TemplateResponseDTO{}, err
 	}
 
+	if err := c.validator.CreateTemplateRequest(ctx, request); err != nil {
+		return dto.TemplateResponseDTO{}, err
+	}
+
 	template := entities.Template{
 		TemplateName:    request.TemplateName,
 		TemplateContent: request.TemplateContent,
@@ -75,6 +79,10 @@ func (c *controller) DeleteTemplateByID(ctx context.Context, user models.User, i
 
 func (c *controller) PatchTemplateByID(ctx context.Context, user models.User, request dto.PatchTemplateRequestDTO) error {
 	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return err
+	}
+
+	if err := c.validator.PatchTemplateRequest(ctx, request); err != nil {
 		return err
 	}
 

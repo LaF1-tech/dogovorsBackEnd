@@ -14,6 +14,10 @@ func (c *controller) CreateEducationalEstablishment(ctx context.Context, user mo
 		return dto.EducationalEstablishmentItemResponseDTO{}, err
 	}
 
+	if err := c.validator.CreateEducationalEstablishmentRequest(ctx, request); err != nil {
+		return dto.EducationalEstablishmentItemResponseDTO{}, err
+	}
+
 	e := entities.EducationalEstablishment{
 		EducationalEstablishmentName:         request.EducationalEstablishmentName,
 		EducationalEstablishmentContactPhone: request.EducationalEstablishmentContactPhone,
@@ -64,6 +68,10 @@ func (c *controller) GetEducationalEstablishmentByID(ctx context.Context, id int
 
 func (c *controller) PatchEducationalEstablishmentByID(ctx context.Context, user models.User, request dto.PatchEducationalEstablishmentRequestDTO) error {
 	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return err
+	}
+
+	if err := c.validator.PatchEducationalEstablishmentRequest(ctx, request); err != nil {
 		return err
 	}
 

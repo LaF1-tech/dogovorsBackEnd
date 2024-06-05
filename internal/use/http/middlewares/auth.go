@@ -9,7 +9,8 @@ import (
 )
 
 var (
-	ErrForbidden = errors.New("forbidden")
+	ErrForbidden    = errors.New("forbidden")
+	ErrUnauthorized = errors.New("unauthorized")
 )
 
 type IAuth interface {
@@ -20,14 +21,14 @@ func Auth(ctrl IAuth) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		cookie, err := ctx.Cookie("token")
 		if err != nil {
-			_ = ctx.Error(err)
+			_ = ctx.Error(ErrUnauthorized)
 			ctx.Abort()
 			return
 		}
 
 		user, err := ctrl.Auth(ctx, cookie)
 		if err != nil {
-			_ = ctx.Error(err)
+			_ = ctx.Error(ErrUnauthorized)
 			ctx.Abort()
 			return
 		}

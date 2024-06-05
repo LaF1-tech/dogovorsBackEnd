@@ -351,6 +351,6 @@ values ('Технологическая практика', '<html lang="ru">
         <p> (подпись)</p>
     </div>
 </div>
-</html>', null, null)
+</html>', null, '"Дата_Рождения" => string')
 
 -- +goose StatementEnd

@@ -14,6 +14,10 @@ func (c *controller) CreateSpecialization(ctx context.Context, user models.User,
 		return dto.SpecializationItemResponseDTO{}, err
 	}
 
+	if err := c.validator.CreateSpecializationRequest(ctx, request); err != nil {
+		return dto.SpecializationItemResponseDTO{}, err
+	}
+
 	s := entities.Specialization{
 		SpecializationName: request.SpecializationName,
 	}
@@ -60,6 +64,10 @@ func (c *controller) GetSpecializationByID(ctx context.Context, id int) (dto.Spe
 
 func (c *controller) PatchSpecializationByID(ctx context.Context, user models.User, request dto.PatchSpecializationRequestDTO) error {
 	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return err
+	}
+
+	if err := c.validator.PatchSpecializationRequest(ctx, request); err != nil {
 		return err
 	}
 
