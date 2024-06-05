@@ -3,8 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
-	"github.com/speedata/bagme/document"
-	"github.com/speedata/boxesandglue/backend/bag"
+	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 	"strings"
 	"time"
 
@@ -101,22 +100,26 @@ func (c *controller) GenerateContractPDF(ctx context.Context, user models.User, 
 	filename := fmt.Sprintf("./contracts/[%d] %s - %s [%s].pdf", template.ContractID, template.TemplateName, template.Data["student_name"], time.Now().Format(time.DateTime))
 	filename = strings.ReplaceAll(filename, ":", "-")
 
-	d, err := document.New(filename)
+	pdfg, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
 		return "", err
 	}
-	if d.AddCSS(template.TemplateStyles); err != nil {
-		return "", err
-	}
-	if err = d.Frontend.LoadIncludedFonts(); err != nil {
-		return "", err
-	}
-	wd := bag.MustSp("580pt")
-	colText := bag.MustSp("2pt")
-	rowText := bag.MustSp("5cm")
-	if err = d.OutputAt(html, wd, colText, rowText); err != nil {
+
+	page := wkhtmltopdf.NewPageReader(strings.NewReader(html))
+	page.EnableLocalFileAccess.Set(true)
+
+	pdfg.AddPage(page)
+	pdfg.Dpi.Set(300)
+	pdfg.Orientation.Set(wkhtmltopdf.OrientationPortrait)
+	pdfg.PageSize.Set(wkhtmltopdf.PageSizeA4)
+
+	if err := pdfg.Create(); err != nil {
 		return "", err
 	}
 
-	return filename, d.Finish()
+	if err := pdfg.WriteFile(filename); err != nil {
+		return "", err
+	}
+
+	return filename, nil
 }

@@ -58,9 +58,11 @@ func (c *controller) GetTemplateByID(ctx context.Context, id int) (dto.TemplateR
 	}
 
 	return dto.TemplateResponseDTO{
-		TemplateID:    template.TemplateID,
-		TemplateName:  template.TemplateName,
-		NecessaryData: template.NecessaryData,
+		TemplateID:      template.TemplateID,
+		TemplateName:    template.TemplateName,
+		TemplateContent: template.TemplateContent,
+		TemplateStyles:  template.TemplateStyles,
+		NecessaryData:   template.NecessaryData,
 	}, nil
 }
 

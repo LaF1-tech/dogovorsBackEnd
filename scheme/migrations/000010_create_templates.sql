@@ -5,7 +5,27 @@ insert into tbl_templates(template_name,
                           template_content,
                           template_styles,
                           necessary_data)
-values ('Технологическая практика', '<div class="doc_inside">
+values ('Технологическая практика', '<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 12px;
+            border: 0;
+            padding: 0;
+            vertical-align: top;
+            font-family: "Times New Roman";
+        }
+
+        .doc_inside {
+            text-align: left;
+            font-size: 12pt;
+            display: inline-block;
+            line-height: 170%;
+        }
+    </style>
+</head>
+<div class="doc_inside">
     <p>Открытое акционерное общество</p>
     <p>"Планар"</p>
     <p>ПРИКАЗ</p>
@@ -38,26 +58,29 @@ values ('Технологическая практика', '<div class="doc_insi
     <p>Примечание. Согласно п. 9 Положения N 860 студенты вузов во время прохождения технологической практики
         выполняют работу, предусмотренную разделом "Должностные обязанности" по соответствующей должности Единого
         квалификационного справочника должностей служащих.</p>
-</div>', '* {
-        margin: 12px;
-        border: 0;
-        padding: 0;
-        vertical-align: top;
-        font-family: Roboto;
-    }
+</div>
+</html>', null, null),
+       ('Преддипломная практика', '<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 12px;
+            border: 0;
+            padding: 0;
+            vertical-align: top;
+            font-family: "Times New Roman";
+        }
 
-    .doc_inside {
-        text-align: left;
-        font-size: 12pt;
-        display: inline-block;
-        line-height: 170%;
-    }
-
-    @font-face {
-        font-family: Roboto;
-        src: url("fonts/RobotoFlex-Regular.ttf");
-    }', null),
-       ('Преддипломная практика', '<div class="doc_inside">
+        .doc_inside {
+            text-align: left;
+            font-size: 12pt;
+            display: inline-block;
+            line-height: 170%;
+        }
+    </style>
+</head>
+<div class="doc_inside">
     <p>Открытое акционерное общество</p>
     <p>"Планар"</p>
     <p>ПРИКАЗ</p>
@@ -90,26 +113,34 @@ values ('Технологическая практика', '<div class="doc_insi
     <p>Примечание. Согласно п. 9 Положения N 860 студенты вузов во время прохождения технологической практики
         выполняют работу, предусмотренную разделом "Должностные обязанности" по соответствующей должности Единого
         квалификационного справочника должностей служащих.</p>
-</div>', '* {
-        margin: 12px;
-        border: 0;
-        padding: 0;
-        vertical-align: top;
-        font-family: Roboto;
-    }
+</div>
+</html>', null, null),
+       ('Трудоустройство', '<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div {
+            font-family: "Times New Roman", sans-serif;
+            margin: 12px;
+            font-size: 12pt;
+        }
 
-    .doc_inside {
-        text-align: left;
-        font-size: 12pt;
-        display: inline-block;
-        line-height: 170%;
-    }
+        th, td {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
 
-    @font-face {
-        font-family: Roboto;
-        src: url("fonts/RobotoFlex-Regular.ttf");
-    }', null),
-       ('Трудоустройство', '<div>
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<div>
     <p>Утвержден постановлением Совмина от 22.06.2011 N 821</p>
     <p>Форма</p>
     <p>__ _____________ 20__ г. _____________</p>
@@ -117,7 +148,7 @@ values ('Технологическая практика', '<div class="doc_insi
 <div>
     <br>
     <br>
-    <span>Гражданин _________________________________________________,</span>
+    <span>Гражданин {{ .student_last_name }} {{ .student_name }} {{ .student_middle_name }} __________________________,</span>
     <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Фамилия,
         собственное имя, отчество) (дата рождения)</p>
     <span>документ, удостоверяющий личность _________________________</span>
@@ -139,7 +170,7 @@ values ('Технологическая практика', '<div class="doc_insi
     <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         (должность, фамилия, собственное имя, отчество)</p>
     <span>действующего на основании __________________________________________,</span>
-    <p>с другой стороны, учреждение образования ___________________________________,</p>
+    <p>с другой стороны, учреждение образования {{ .educational_establishment_name }},</p>
     <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(наименование)</p>
     <p>______________________________________________________________________________</p>
     <span>в лице _____________________________________________________________________,</span>
@@ -150,14 +181,14 @@ values ('Технологическая практика', '<div class="doc_insi
         заключили настоящий договор о нижеследующем:
     </p>
     <div>
-        <p>1. <span>Гражданин _______________________________________________________</span>
+        <p>1. <span>Гражданин {{ .student_last_name }} {{ .student_name }} ___________________</span>
         <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Фамилия,
             собственное имя, отчество)</p>
-        <p>__________________________________________________________________________ обязуется:</p>
+        <p>{{ .student_middle_name }} __________________________________________ обязуется:</p>
         <ul>
             <li>1.1. пройти полный курс обучения сроком ______ лет в учреждении образования (направлению специальности,
                 специализации) или квалификации (профессии рабочего, должности служащего)
-                ____________________________________________________
+                {{ .specialization_name }}
             </li>
             <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(код
                 и наименование</p>
@@ -171,7 +202,7 @@ values ('Технологическая практика', '<div class="doc_insi
                 и получить квалификацию (профессию рабочего, должность служащего) __________
             </li>
             <li>
-                _______________________________________________________________________________
+                ________________________ {{ .specialization_name }} ___________________________
             </li>
             <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(наименование
                 квалификации (профессии рабочего, должности служащего)</p>
@@ -201,9 +232,9 @@ values ('Технологическая практика', '<div class="doc_insi
         <p>2. Заказчик обязуется:</p>
         <ul>
             <li>2.1. предоставить гражданину работу после окончания обучения в соответствии с полученной специальностью
-                (направлением специальности, специализацией) и присвоенной квалификацией в (на) ________________________
+                (направлением специальности, специализацией) и присвоенной квалификацией в (на) ОАО "Планар"
                 (место работы, наименование структурного подразделения) в должности (профессии)
-                __________________________________________________;
+                _______ {{ .specialization_name }} _________;
             </li>
             <li>2.2. предоставить гражданину жилое помещение в соответствии с законодательством;</li>
             <li>2.3. в случае невозможности трудоустройства в соответствии с настоящим договором не позднее чем за два
@@ -223,7 +254,7 @@ values ('Технологическая практика', '<div class="doc_insi
         <ul>
             <li>3.1. обеспечить подготовку гражданина по специальности (направлению специальности, специализации),
                 квалификации (профессии рабочего, должности служащего)
-                ________________________________________________________________ (код и наименование специальности
+                ___________ {{ .specialization_name }} _____________________ (код и наименование специальности
                 (направления специальности, специализации), квалификации (профессии рабочего, должности служащего) в
                 соответствии с требованиями, установленными учебными планами и программами;
             </li>
@@ -247,7 +278,7 @@ values ('Технологическая практика', '<div class="doc_insi
 
             ___________________________________________________________________________
         </p>
-        <br>
+
         <table border="0">
             <thead>
             <tr>
@@ -292,9 +323,13 @@ values ('Технологическая практика', '<div class="doc_insi
                 <td>
                     М.П.
                 </td>
+                <td>
+                </td>
             </tr>
             </tbody>
         </table>
+
+        <br>
         <br>
         <p> С заключением настоящего договора несовершеннолетним гражданином _____</p>
         <p>____________________________________________________________________________</p>
@@ -315,29 +350,7 @@ values ('Технологическая практика', '<div class="doc_insi
         <p>___________________</p>
         <p> (подпись)</p>
     </div>
-</div>', 'div {
-        font-family: Roboto;
-        margin: 12px;
-        font-size: 12pt;
-    }
-
-    th, td {
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-
-    ul {
-        list-style-type: none;
-        padding-left: 0;
-    }
-
-    ul li {
-        margin-bottom: 5px;
-    }
-
-    @font-face {
-        font-family: Roboto;
-        src: url("fonts/RobotoFlex-Regular.ttf");
-    }', null)
+</div>
+</html>', null, null)
 
 -- +goose StatementEnd

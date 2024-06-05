@@ -27,7 +27,12 @@ INSERT INTO tbl_employees(username, password, first_name, last_name, permissions
 
 func (r *repository) UpdateUser(ctx context.Context, user entities.User) error {
 	query := `
-UPDATE tbl_employees SET first_name=$2, last_name=$3, permissions=$4 WHERE employee_id = $1
+UPDATE tbl_employees 
+SET 
+    first_name=COALESCE(NULLIF($2,''), first_name), 
+    last_name=COALESCE(NULLIF($3,''), last_name), 
+    permissions=COALESCE(NULLIF($4::tp_permission[],'{}'), permissions)
+WHERE employee_id = $1
 `
 
 	_, err := r.db.ExecContext(ctx, query, user.UserID, user.FirstName, user.LastName, pq.Array(user.Permissions))
@@ -37,7 +42,7 @@ UPDATE tbl_employees SET first_name=$2, last_name=$3, permissions=$4 WHERE emplo
 
 	if user.Password != "" {
 		query = `
-UPDATE tbl_employees SET password = $2 WHERE employee_id = $1
+UPDATE tbl_employees SET password = COALESCE(NULLIF($2,''),password) WHERE employee_id = $1
 `
 
 		_, err = r.db.ExecContext(ctx, query, user.UserID, user.Password)
