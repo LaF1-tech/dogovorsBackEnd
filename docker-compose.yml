@@ -10,4 +10,4 @@ services:
     environment:
       - POSTGRES_PASSWORD="your_password"
       - POSTGRES_USER="your_user"
-      - POSTGRES_DB="dogovors"
+      - POSTGRES_DB=dogovors
