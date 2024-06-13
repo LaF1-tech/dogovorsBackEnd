@@ -1,15 +1,17 @@
 -- +goose Up
 -- +goose StatementBegin
 
-create view vw_full_application_data as
-select application_id,
+CREATE OR REPLACE VIEW vw_full_application_data AS
+SELECT application_id,
        tee.educational_establishment_name,
        ts.specialization_name,
        last_name,
        name,
        middle_name,
        phone_number,
-       types,
+       (SELECT json_agg(t.template_name)
+        FROM json_each_text(types) AS elem(key, value)
+                 JOIN tbl_templates t ON t.template_id = elem.key::integer) AS types,
        application_status,
        execution_date,
        expiration_date

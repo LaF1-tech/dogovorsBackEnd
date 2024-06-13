@@ -15,6 +15,7 @@ type ApplicationsRepository interface {
 	PatchApplicationByID(ctx context.Context, application entities.Application) error
 
 	CreateContract(ctx context.Context, contract entities2.Contract) (int, error)
+	CreateContractExecutionControl(ctx context.Context, cec entities.ContractExecutionControl) (int, error)
 	CreateStudent(ctx context.Context, student entities.Student) (int, error)
 	CreateContractDataRegistryEntry(ctx context.Context, cdr entities.ContractDataRegistry) (int, error)
 }

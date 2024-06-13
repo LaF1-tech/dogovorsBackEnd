@@ -27,7 +27,7 @@ type ApplicationViewResponseDTO struct {
 	Name                         string                     `json:"name,omitempty"`
 	MiddleName                   string                     `json:"middle_name,omitempty"`
 	PhoneNumber                  string                     `json:"phone_number,omitempty"`
-	Types                        map[int]map[string]any     `json:"types,omitempty"`
+	Types                        []string                   `json:"types,omitempty"`
 	ApplicationStatus            entities.ApplicationStatus `json:"application_status,omitempty"`
 	ExecutionDate                time.Time                  `json:"execution_date,omitempty"`
 	ExpirationDate               time.Time                  `json:"expiration_date,omitempty"`

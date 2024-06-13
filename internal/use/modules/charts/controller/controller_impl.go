@@ -26,6 +26,24 @@ func (c *controller) GetPeriodChart(ctx context.Context, user models.User) (dto.
 	}, nil
 }
 
+func (c *controller) GetPeriodUserChart(ctx context.Context, user models.User, request dto.PeriodUserChartRequestDTO) (dto.PeriodsChartResponseDTO, error) {
+	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
+		return dto.PeriodsChartResponseDTO{}, err
+	}
+	contractsChart, err := c.repository.GetPeriodUserChart(ctx, request.Start, request.End)
+	if err != nil {
+		return dto.PeriodsChartResponseDTO{}, err
+	}
+	return dto.PeriodsChartResponseDTO{
+		List: uslices.MapFunc(contractsChart, func(item entities.PeriodChart) dto.PeriodChartResponseDTO {
+			return dto.PeriodChartResponseDTO{
+				Period:        item.Period,
+				ContractCount: item.ContractCount,
+			}
+		}),
+	}, nil
+}
+
 func (c *controller) GetEducationalEstablishmentChart(ctx context.Context, user models.User) (dto.EducationalEstablishmentsChartResponseDTO, error) {
 	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
 		return dto.EducationalEstablishmentsChartResponseDTO{}, err

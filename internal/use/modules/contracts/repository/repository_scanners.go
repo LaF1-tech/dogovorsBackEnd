@@ -12,11 +12,13 @@ import (
 func (r *repository) scanAggregatedContract(row *sql.Rows) (contract entities.AggregatedContract, err error) {
 	err = row.Scan(
 		&contract.ContractID,
-		&contract.StudentName,
+		&contract.TemplateName,
 		&contract.StudentLastName,
+		&contract.StudentName,
+		&contract.StudentMiddleName,
+		&contract.ContractStatus,
 		&contract.EmployeeFirstName,
 		&contract.EmployeeLastName,
-		&contract.TemplateName,
 		&contract.ExecutionDate,
 		&contract.ExpirationDate)
 	if err != nil {

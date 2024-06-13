@@ -11,6 +11,7 @@ import (
 
 type ChartsController interface {
 	GetPeriodChart(ctx context.Context, user models.User) (dto.PeriodsChartResponseDTO, error)
+	GetPeriodUserChart(ctx context.Context, user models.User, request dto.PeriodUserChartRequestDTO) (dto.PeriodsChartResponseDTO, error)
 	GetEducationalEstablishmentChart(ctx context.Context, user models.User) (dto.EducationalEstablishmentsChartResponseDTO, error)
 	GetSpecializationsChart(ctx context.Context, user models.User) (dto.SpecializationsChartResponseDTO, error)
 	GetTemplatesChart(ctx context.Context, user models.User) (dto.TemplatesChartResponseDTO, error)

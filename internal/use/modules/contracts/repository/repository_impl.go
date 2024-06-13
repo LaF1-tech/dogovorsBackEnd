@@ -9,13 +9,16 @@ import (
 func (r *repository) GetAllContracts(ctx context.Context) ([]entities.AggregatedContract, error) {
 	query := `
 SELECT contract_id, 
-       student_name, 
-       student_last_name,
-       employee_first_name, 
-       employee_last_name, 
        template_name, 
-       execution_date, 
-       expiration_date from vw_full_contract_data
+       student_last_name,
+       student_name, 
+       student_middle_name, 
+       CONTRACT_STATUS, 
+       employee_first_name, 
+       employee_last_name,
+       execution_date,
+       expiration_date
+from vw_full_contract_execution_control_data
 `
 	res, err := r.db.QueryContext(ctx, query)
 	if err != nil {
@@ -45,21 +48,13 @@ SELECT contract_id,
 	return r.scanContract(response)
 }
 
-func (r *repository) PatchContractByID(ctx context.Context, contract entities.Contract) error {
-	query := `UPDATE tbl_contracts
-SET student_id=COALESCE(NULLIF($1, 0), student_id),
-    employee_id=COALESCE(NULLIF($2, 0), employee_id),
-    template_id=COALESCE(NULLIF($3,0), template_id),
-    execution_date=COALESCE(NULLIF($4, date('0000-00-00'))::timestamp, execution_date),
-    expiration_date=COALESCE(NULLIF($5, date('0000-00-00'))::timestamp, expiration_date)
-WHERE contract_id = $6
+func (r *repository) PatchContractByID(ctx context.Context, contract entities.ContractExecutionControl) error {
+	query := `UPDATE tbl_contract_execution_control
+SET CONTRACT_STATUS=COALESCE(NULLIF($1, '')::tp_execution_control_status, CONTRACT_STATUS)
+    WHERE CONTRACT_ID = $2
 `
 	_, err := r.db.ExecContext(ctx, query,
-		contract.StudentID,
-		contract.EmployeeID,
-		contract.TemplateId,
-		contract.ExecutionDate,
-		contract.ExpirationDate,
+		contract.ContractStatus,
 		contract.ContractID)
 	if err != nil {
 		return err

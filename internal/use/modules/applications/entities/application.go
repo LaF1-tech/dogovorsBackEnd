@@ -37,7 +37,7 @@ type AggregatedApplication struct {
 	Name                         string
 	MiddleName                   string
 	PhoneNumber                  string
-	Types                        map[int]map[string]any
+	Types                        []string
 	ApplicationStatus            ApplicationStatus
 	ExecutionDate                time.Time
 	ExpirationDate               time.Time

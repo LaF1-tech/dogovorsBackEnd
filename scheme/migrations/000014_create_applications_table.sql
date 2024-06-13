@@ -12,7 +12,7 @@ create table tbl_applications
     phone_number                 varchar(50)                                  NOT NULL,
     types                        json                                         NOT NULL,
     application_status           tp_application_status default ('В процессе') NOT NULL,
-    execution_date               timestamp                                    NOT NULL CHECK (EXTRACT(YEAR FROM execution_date) = EXTRACT(YEAR FROM CURRENT_DATE)),
+    execution_date               timestamp                                    NOT NULL CHECK (EXTRACT(DAY FROM execution_date) >= EXTRACT(DAY FROM CURRENT_DATE)),
     expiration_date              timestamp                                    NOT NULL CHECK (expiration_date >= tbl_applications.execution_date),
 
 

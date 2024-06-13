@@ -11,6 +11,7 @@ import (
 var (
 	ErrForbidden    = errors.New("forbidden")
 	ErrUnauthorized = errors.New("unauthorized")
+	ErrValidation   = errors.New("validation error")
 )
 
 type IAuth interface {

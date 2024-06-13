@@ -4,7 +4,7 @@
 create table tbl_educational_establishments
 (
     educational_establishment_id            serial primary key,
-    educational_establishment_name          varchar(255) NOT NULL,
+    educational_establishment_name          varchar(255) NOT NULL UNIQUE,
     educational_establishment_contact_phone varchar(50)  NOT NULL
 );
 

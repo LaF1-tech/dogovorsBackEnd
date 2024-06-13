@@ -42,6 +42,16 @@ func (c *controller) acceptApplication(ctx context.Context, user models.User, re
 			return err
 		}
 
+		contractEC := entities.ContractExecutionControl{
+			ContractId:     contractID,
+			ContractStatus: entities.ContractStatusAdded,
+		}
+
+		_, err = c.repository.CreateContractExecutionControl(ctx, contractEC)
+		if err != nil {
+			return err
+		}
+
 		contractDR := entities.ContractDataRegistry{
 			TemplateID: id,
 			ContractID: contractID,

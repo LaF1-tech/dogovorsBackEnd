@@ -1,9 +1,7 @@
 package entities
 
-import "time"
-
 type PeriodChart struct {
-	Period        time.Time
+	Period        string
 	ContractCount int
 }
 

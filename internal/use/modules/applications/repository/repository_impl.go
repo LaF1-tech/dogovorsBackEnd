@@ -126,6 +126,15 @@ INSERT INTO tbl_contracts (student_id, employee_id, template_id, execution_date,
 	return scanners.Id(row)
 }
 
+func (r *repository) CreateContractExecutionControl(ctx context.Context, cec entities.ContractExecutionControl) (int, error) {
+	query := `
+INSERT INTO tbl_contract_execution_control (CONTRACT_ID, CONTRACT_STATUS) VALUES ($1,$2) RETURNING ID
+`
+
+	row := r.db.QueryRowContext(ctx, query, cec.ContractId, cec.ContractStatus)
+	return scanners.Id(row)
+}
+
 func (r *repository) CreateStudent(ctx context.Context, student entities.Student) (int, error) {
 	query := `
 INSERT INTO tbl_students (student_name, student_middle_name, student_last_name, specialization_id, educational_establishment_id, student_phone_number) VALUES ($1,$2,$3,$4,$5,$6) RETURNING student_id

@@ -28,11 +28,13 @@ func (c *controller) GetAllContracts(ctx context.Context, user models.User) (dto
 		List: uslices.MapFunc(applications, func(item entities.AggregatedContract) dto.ContractAggregatedResponseDTO {
 			return dto.ContractAggregatedResponseDTO{
 				ContractID:        item.ContractID,
-				StudentName:       item.StudentName,
+				TemplateName:      item.TemplateName,
 				StudentLastName:   item.StudentLastName,
+				StudentName:       item.StudentName,
+				StudentMiddleName: item.StudentMiddleName,
+				ContractStatus:    item.ContractStatus,
 				EmployeeFirstName: item.EmployeeFirstName,
 				EmployeeLastName:  item.EmployeeLastName,
-				TemplateName:      item.TemplateName,
 				ExecutionDate:     item.ExecutionDate,
 				ExpirationDate:    item.ExpirationDate,
 			}
@@ -62,13 +64,9 @@ func (c *controller) PatchContractByID(ctx context.Context, user models.User, re
 	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
 		return err
 	}
-	contract := entities.Contract{
+	contract := entities.ContractExecutionControl{
 		ContractID:     request.ContractID,
-		StudentID:      request.StudentID,
-		EmployeeID:     request.EmployeeID,
-		TemplateId:     request.EmployeeID,
-		ExecutionDate:  request.ExecutionDate,
-		ExpirationDate: request.ExpirationDate,
+		ContractStatus: request.ContractStatus,
 	}
 	err := c.repository.PatchContractByID(ctx, contract)
 	if err != nil {

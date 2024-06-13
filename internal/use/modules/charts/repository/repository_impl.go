@@ -2,18 +2,45 @@ package repository
 
 import (
 	"context"
+	"time"
 
 	"dogovorsBackEnd/internal/use/modules/charts/entities"
 )
 
 func (r *repository) GetPeriodChart(ctx context.Context) ([]entities.PeriodChart, error) {
-	query := `SELECT DATE_TRUNC('month', execution_date) AS period,
-       				 COUNT(*)                            AS contract_count
+	query := `
+SELECT TO_CHAR(DATE_TRUNC('month', execution_date), 'TMMonth') AS period,
+       COUNT(*)                                                AS contract_count
 FROM tbl_contracts
 GROUP BY period
 ORDER BY period;
 `
 	response, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	var data []entities.PeriodChart
+	for response.Next() {
+		periodChartData, err := r.scanPeriodChart(response)
+		if err != nil {
+			return nil, err
+		}
+		data = append(data, periodChartData)
+	}
+	return data, nil
+
+}
+
+func (r *repository) GetPeriodUserChart(ctx context.Context, dateStart time.Time, dateEnd time.Time) ([]entities.PeriodChart, error) {
+	query := `
+SELECT DATE(execution_date) AS execution_day,
+       COUNT(*)             AS contract_count
+FROM tbl_contracts
+WHERE execution_date BETWEEN $1 AND $2
+GROUP BY DATE(execution_date)
+ORDER BY execution_day;`
+
+	response, err := r.db.QueryContext(ctx, query, dateStart, dateEnd)
 	if err != nil {
 		return nil, err
 	}

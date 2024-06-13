@@ -11,6 +11,7 @@ type ChartsHandler interface {
 	http.IRoutes
 
 	GetPeriodChart(ctx *gin.Context)
+	GetPeriodUserChart(ctx *gin.Context)
 	GetEducationalEstablishmentChart(ctx *gin.Context)
 	GetSpecializationsChart(ctx *gin.Context)
 	GetTemplatesChart(ctx *gin.Context)

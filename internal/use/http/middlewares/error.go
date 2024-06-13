@@ -26,6 +26,8 @@ func errorToStatusMapper(err error) (status int) {
 		status = http.StatusForbidden
 	case errors.Is(err, ErrUnauthorized):
 		status = http.StatusUnauthorized
+	case errors.Is(err, ErrValidation):
+		status = http.StatusUnprocessableEntity
 	default:
 		status = http.StatusInternalServerError
 	}

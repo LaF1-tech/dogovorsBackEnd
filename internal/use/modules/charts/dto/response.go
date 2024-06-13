@@ -1,10 +1,8 @@
 package dto
 
-import "time"
-
 type PeriodChartResponseDTO struct {
-	Period        time.Time `json:"period,omitempty"`
-	ContractCount int       `json:"contract_count,omitempty"`
+	Period        string `json:"period,omitempty"`
+	ContractCount int    `json:"contract_count,omitempty"`
 }
 
 type EducationalEstablishmentChartResponseDTO struct {
