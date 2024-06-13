@@ -7,7 +7,7 @@ create type tp_execution_control_status as enum
         'Проверено',
         'Утверждено',
         'Исполнено',
-        'Неисполнено'
+        'Не исполнено'
         );
 
 -- +goose StatementEnd

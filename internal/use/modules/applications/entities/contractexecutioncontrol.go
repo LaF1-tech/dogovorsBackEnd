@@ -7,7 +7,7 @@ var (
 	ContractStatusChecked      ContractStatus = "Проверено"
 	ContractStatusApproved     ContractStatus = "Утверждено"
 	ContractStatusFulfilled    ContractStatus = "Исполнено"
-	ContractStatusNotFulfilled ContractStatus = "Неисполнено"
+	ContractStatusNotFulfilled ContractStatus = "Не исполнено"
 )
 
 type ContractExecutionControl struct {
