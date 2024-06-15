@@ -3,16 +3,20 @@ package repository
 import (
 	"context"
 	"dogovorsBackEnd/internal/use/modules/educationalestablishments/entities"
-	"dogovorsBackEnd/internal/use/utils/scanners"
 )
 
-func (r *repository) CreateEducationalEstablishment(ctx context.Context, establishment entities.EducationalEstablishment) (int, error) {
+func (r *repository) CreateEducationalEstablishment(ctx context.Context, establishment entities.EducationalEstablishment) (id int, err error) {
 	query := `
 INSERT INTO tbl_educational_establishments (educational_establishment_name, educational_establishment_contact_phone) VALUES ($1,$2) RETURNING educational_establishment_id
 `
 
 	row := r.db.QueryRowContext(ctx, query, establishment.EducationalEstablishmentName, establishment.EducationalEstablishmentContactPhone)
-	return scanners.Id(row)
+
+	err = row.Scan(&id)
+	if err != nil {
+		return 0, ErrCannotCreate
+	}
+	return id, nil
 }
 
 func (r *repository) GetEducationalEstablishments(ctx context.Context) ([]entities.EducationalEstablishment, error) {
@@ -20,18 +24,21 @@ func (r *repository) GetEducationalEstablishments(ctx context.Context) ([]entiti
 SELECT educational_establishment_id,
 	   educational_establishment_name,
 	   educational_establishment_contact_phone 
-from tbl_educational_establishments
+from tbl_educational_establishments order by educational_establishment_id
 `
 	res, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, ErrNotFound
+	}
 	var educationalEstablishments []entities.EducationalEstablishment
 	for res.Next() {
 		preview, err := r.scanEducationalEstablishments(res)
 		if err != nil {
-			return nil, err
+			return nil, ErrNotFound
 		}
 		educationalEstablishments = append(educationalEstablishments, preview)
 	}
-	return educationalEstablishments, err
+	return educationalEstablishments, nil
 }
 
 func (r *repository) GetEducationalEstablishmentByID(ctx context.Context, id int) (entities.EducationalEstablishment, error) {
@@ -60,7 +67,7 @@ WHERE educational_establishment_id=$1
 	)
 
 	if err != nil {
-		return err
+		return ErrCannotUpdate
 	}
 	return nil
 }
@@ -71,7 +78,7 @@ DELETE FROM tbl_educational_establishments WHERE educational_establishment_id=$1
 `
 	_, err := r.db.ExecContext(ctx, query, id)
 	if err != nil {
-		return err
+		return ErrCannotDelete
 	}
 	return nil
 }

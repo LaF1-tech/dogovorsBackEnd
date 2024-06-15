@@ -12,6 +12,7 @@ var (
 	ErrForbidden    = errors.New("forbidden")
 	ErrUnauthorized = errors.New("unauthorized")
 	ErrValidation   = errors.New("validation error")
+	ErrNotFound     = errors.New("not found")
 )
 
 type IAuth interface {

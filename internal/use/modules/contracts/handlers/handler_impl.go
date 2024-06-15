@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"dogovorsBackEnd/internal/use/modules/contracts/dto"
 	"dogovorsBackEnd/internal/use/utils"
 )
 
@@ -35,21 +34,6 @@ func (h *handler) GetContractByID(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, preview)
-}
-
-func (h *handler) PatchContractByID(ctx *gin.Context) {
-	user := utils.GetUser(ctx)
-	var request dto.PatchContractRequestDTO
-	if err := ctx.BindJSON(&request); err != nil {
-		_ = ctx.Error(err)
-		return
-	}
-	err := h.controller.PatchContractByID(ctx, user, request)
-	if err != nil {
-		_ = ctx.Error(err)
-		return
-	}
-	ctx.Status(http.StatusNoContent)
 }
 
 func (h *handler) GenerateContractPDF(ctx *gin.Context) {

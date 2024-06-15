@@ -3,31 +3,37 @@ package repository
 import (
 	"context"
 	"dogovorsBackEnd/internal/use/modules/specializations/entities"
-	"dogovorsBackEnd/internal/use/utils/scanners"
 )
 
-func (r *repository) CreateSpecialization(ctx context.Context, specialization entities.Specialization) (int, error) {
+func (r *repository) CreateSpecialization(ctx context.Context, specialization entities.Specialization) (id int, err error) {
 	query := `
 INSERT INTO tbl_specializations (specialization_name) VALUES ($1) RETURNING specialization_id;
 `
 	row := r.db.QueryRowContext(ctx, query, specialization.SpecializationName)
-	return scanners.Id(row)
+	err = row.Scan(&id)
+	if err != nil {
+		return 0, ErrCannotCreate
+	}
+	return id, nil
 }
 
 func (r *repository) GetSpecializations(ctx context.Context) ([]entities.Specialization, error) {
 	query := `
-SELECT specialization_id, specialization_name from tbl_specializations
+SELECT specialization_id, specialization_name from tbl_specializations order by specialization_id
 `
 	res, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, ErrNotFound
+	}
 	var specializations []entities.Specialization
 	for res.Next() {
 		preview, err := r.scanSpecializations(res)
 		if err != nil {
-			return nil, err
+			return nil, ErrNotFound
 		}
 		specializations = append(specializations, preview)
 	}
-	return specializations, err
+	return specializations, nil
 }
 
 func (r *repository) GetSpecializationByID(ctx context.Context, id int) (entities.Specialization, error) {
@@ -46,7 +52,7 @@ WHERE specialization_id=$1
 `
 	_, err := r.db.ExecContext(ctx, query, specialization.SpecializationID, specialization.SpecializationName)
 	if err != nil {
-		return err
+		return ErrCannotUpdate
 	}
 	return nil
 }
@@ -57,7 +63,7 @@ DELETE FROM tbl_specializations WHERE specialization_id = $1
 `
 	_, err := r.db.ExecContext(ctx, query, specID)
 	if err != nil {
-		return err
+		return ErrCannotDelete
 	}
 	return nil
 }

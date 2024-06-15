@@ -9,8 +9,10 @@ select tc.contract_id,
        tbl_templates.necessary_data,
        jsonb_build_object(
                'template_id', tc.template_id,
-               'execution_date', tc.execution_date,
-               'expiration_date', tc.expiration_date,
+               'execution_date',
+               TO_CHAR((tc.execution_date AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/Moscow'), 'dd.mm.yyyy'),
+               'expiration_date',
+               TO_CHAR((tc.expiration_date AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/Moscow'), 'dd.mm.yyyy'),
                'student_last_name', ts.student_last_name,
                'student_name', ts.student_name,
                'student_middle_name', ts.student_middle_name,
@@ -25,7 +27,8 @@ from tbl_templates
          inner join public.tbl_contracts tc on tc.contract_id = tcdr.contract_id
          inner join public.tbl_students ts on ts.student_id = tc.student_id
          inner join public.tbl_specializations t on t.specialization_id = ts.specialization_id
-         inner join public.tbl_educational_establishments tee on tee.educational_establishment_id = ts.educational_establishment_id
+         inner join public.tbl_educational_establishments tee
+                    on tee.educational_establishment_id = ts.educational_establishment_id
          inner join public.tbl_employees te on te.employee_id = tc.employee_id;
 
 -- +goose StatementEnd

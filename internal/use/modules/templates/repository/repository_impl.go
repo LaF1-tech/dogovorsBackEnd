@@ -26,7 +26,7 @@ INSERT INTO tbl_templates (template_name, template_content, template_styles, nec
 
 func (r *repository) GetAllTemplatesPreview(ctx context.Context) ([]entities.TemplatePreview, error) {
 	query := `
-SELECT template_id, template_name from tbl_templates
+SELECT template_id, template_name from tbl_templates order by template_id
 `
 	res, err := r.db.QueryContext(ctx, query)
 	var templates []entities.TemplatePreview

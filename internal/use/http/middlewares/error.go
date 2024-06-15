@@ -24,6 +24,8 @@ func errorToStatusMapper(err error) (status int) {
 	switch {
 	case errors.Is(err, ErrForbidden):
 		status = http.StatusForbidden
+	case errors.Is(err, ErrNotFound):
+		status = http.StatusNotFound
 	case errors.Is(err, ErrUnauthorized):
 		status = http.StatusUnauthorized
 	case errors.Is(err, ErrValidation):

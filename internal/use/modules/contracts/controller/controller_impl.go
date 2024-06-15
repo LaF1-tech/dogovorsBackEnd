@@ -31,8 +31,6 @@ func (c *controller) GetAllContracts(ctx context.Context, user models.User) (dto
 				TemplateName:      item.TemplateName,
 				StudentLastName:   item.StudentLastName,
 				StudentName:       item.StudentName,
-				StudentMiddleName: item.StudentMiddleName,
-				ContractStatus:    item.ContractStatus,
 				EmployeeFirstName: item.EmployeeFirstName,
 				EmployeeLastName:  item.EmployeeLastName,
 				ExecutionDate:     item.ExecutionDate,
@@ -58,21 +56,6 @@ func (c *controller) GetContractByID(ctx context.Context, user models.User, id i
 		ExecutionDate:  contract.ExecutionDate,
 		ExpirationDate: contract.ExpirationDate,
 	}, nil
-}
-
-func (c *controller) PatchContractByID(ctx context.Context, user models.User, request dto.PatchContractRequestDTO) error {
-	if err := user.AssertPermission(models.PermissionAdmin); err != nil {
-		return err
-	}
-	contract := entities.ContractExecutionControl{
-		ContractID:     request.ContractID,
-		ContractStatus: request.ContractStatus,
-	}
-	err := c.repository.PatchContractByID(ctx, contract)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func (c *controller) generateTemplateHTML(ctx context.Context, id int) (tEntities.FullTemplate, string, error) {

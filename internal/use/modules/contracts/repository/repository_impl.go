@@ -9,30 +9,28 @@ import (
 func (r *repository) GetAllContracts(ctx context.Context) ([]entities.AggregatedContract, error) {
 	query := `
 SELECT contract_id, 
-       template_name, 
-       student_last_name,
        student_name, 
-       student_middle_name, 
-       CONTRACT_STATUS, 
+       student_last_name,
        employee_first_name, 
        employee_last_name,
+       template_name,
        execution_date,
        expiration_date
-from vw_full_contract_execution_control_data
+from vw_full_contract_data order by contract_id
 `
 	res, err := r.db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, err
+		return nil, ErrNotFound
 	}
 	var contracts []entities.AggregatedContract
 	for res.Next() {
 		contract, err := r.scanAggregatedContract(res)
 		if err != nil {
-			return nil, err
+			return nil, ErrNotFound
 		}
 		contracts = append(contracts, contract)
 	}
-	return contracts, err
+	return contracts, nil
 }
 
 func (r *repository) GetContractByID(ctx context.Context, id int) (entities.Contract, error) {
@@ -46,18 +44,4 @@ SELECT contract_id,
 `
 	response := r.db.QueryRowContext(ctx, query, id)
 	return r.scanContract(response)
-}
-
-func (r *repository) PatchContractByID(ctx context.Context, contract entities.ContractExecutionControl) error {
-	query := `UPDATE tbl_contract_execution_control
-SET CONTRACT_STATUS=COALESCE(NULLIF($1, '')::tp_execution_control_status, CONTRACT_STATUS)
-    WHERE CONTRACT_ID = $2
-`
-	_, err := r.db.ExecContext(ctx, query,
-		contract.ContractStatus,
-		contract.ContractID)
-	if err != nil {
-		return err
-	}
-	return nil
 }

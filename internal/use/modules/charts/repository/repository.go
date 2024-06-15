@@ -3,9 +3,14 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"time"
 
 	"dogovorsBackEnd/internal/use/modules/charts/entities"
+)
+
+var (
+	ErrNotFound = errors.New("not found")
 )
 
 type ChartsRepository interface {

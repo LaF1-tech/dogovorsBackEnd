@@ -13,8 +13,6 @@ type ContractsHandler interface {
 	GetAllContracts(ctx *gin.Context)
 	GetContractByID(ctx *gin.Context)
 
-	PatchContractByID(ctx *gin.Context)
-
 	GenerateContractPDF(ctx *gin.Context)
 }
 

@@ -148,7 +148,7 @@ values ('Технологическая практика', '<html lang="ru">
 <div>
     <br>
     <br>
-    <span>Гражданин {{ .student_last_name }} {{ .student_name }} {{ .student_middle_name }} __________________________,</span>
+    <span>Гражданин {{ .student_last_name }} {{ .student_name }} {{ .student_middle_name }} {{ .Дата_Рождения }},</span>
     <p style="font-size:8pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Фамилия,
         собственное имя, отчество) (дата рождения)</p>
     <span>документ, удостоверяющий личность _________________________</span>

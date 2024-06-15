@@ -47,7 +47,7 @@ UPDATE tbl_employees SET password = COALESCE(NULLIF($2,''),password) WHERE emplo
 
 		_, err = r.db.ExecContext(ctx, query, user.UserID, user.Password)
 		if err != nil {
-			return err
+			return ErrCannotUpdate
 		}
 	}
 
@@ -60,7 +60,7 @@ DELETE FROM tbl_employees WHERE employee_id = $1
 `
 	_, err := r.db.ExecContext(ctx, query, userID)
 	if err != nil {
-		return err
+		return ErrCannotDelete
 	}
 	return nil
 }
@@ -82,5 +82,8 @@ INSERT INTO tbl_sessions (employee_id, token) VALUES ($1, $2)
 `
 
 	_, err := r.db.ExecContext(ctx, query, session.UserID, session.Token)
-	return err
+	if err != nil {
+		return ErrCannotCreate
+	}
+	return nil
 }

@@ -3,8 +3,15 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 
 	"dogovorsBackEnd/internal/use/modules/auth/entities"
+)
+
+var (
+	ErrCannotUpdate = errors.New("cannot update")
+	ErrCannotDelete = errors.New("cannot delete")
+	ErrCannotCreate = errors.New("cannot create")
 )
 
 type AuthRepository interface {

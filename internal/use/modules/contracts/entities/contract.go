@@ -6,16 +6,6 @@ import (
 	"dogovorsBackEnd/internal/use/entities"
 )
 
-type ContractStatus string
-
-var (
-	ContractStatusAdded        ContractStatus = "Добавлено"
-	ContractStatusChecked      ContractStatus = "Проверено"
-	ContractStatusApproved     ContractStatus = "Утверждено"
-	ContractStatusFulfilled    ContractStatus = "Исполнено"
-	ContractStatusNotFulfilled ContractStatus = "Не исполнено"
-)
-
 type Contract struct {
 	entities.Timed
 
@@ -28,20 +18,12 @@ type Contract struct {
 }
 type AggregatedContract struct {
 	ContractID        int
-	TemplateName      string
-	StudentLastName   string
 	StudentName       string
-	StudentMiddleName string
-	ContractStatus    ContractStatus
+	StudentLastName   string
 	EmployeeFirstName string
 	EmployeeLastName  string
+	TemplateName      string
 
 	ExecutionDate  time.Time
 	ExpirationDate time.Time
-}
-
-type ContractExecutionControl struct {
-	Id             int
-	ContractID     int
-	ContractStatus ContractStatus
 }

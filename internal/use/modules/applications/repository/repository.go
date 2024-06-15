@@ -3,9 +3,15 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
 	entities2 "dogovorsBackEnd/internal/use/modules/contracts/entities"
+)
+
+var (
+	ErrNotFound     = errors.New("entity not found")
+	ErrCannotCreate = errors.New("cannot create entity")
 )
 
 type ApplicationsRepository interface {

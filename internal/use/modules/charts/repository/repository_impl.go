@@ -17,7 +17,7 @@ ORDER BY period;
 `
 	response, err := r.db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, err
+		return nil, ErrNotFound
 	}
 	var data []entities.PeriodChart
 	for response.Next() {
@@ -33,16 +33,16 @@ ORDER BY period;
 
 func (r *repository) GetPeriodUserChart(ctx context.Context, dateStart time.Time, dateEnd time.Time) ([]entities.PeriodChart, error) {
 	query := `
-SELECT DATE(execution_date) AS execution_day,
+SELECT TO_CHAR((execution_date AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/Moscow'), 'dd.mm.yyyy') AS execution_day,
        COUNT(*)             AS contract_count
 FROM tbl_contracts
 WHERE execution_date BETWEEN $1 AND $2
-GROUP BY DATE(execution_date)
+GROUP BY TO_CHAR((execution_date AT TIME ZONE 'UTC' AT TIME ZONE 'Europe/Moscow'), 'dd.mm.yyyy')
 ORDER BY execution_day;`
 
 	response, err := r.db.QueryContext(ctx, query, dateStart, dateEnd)
 	if err != nil {
-		return nil, err
+		return nil, ErrNotFound
 	}
 	var data []entities.PeriodChart
 	for response.Next() {
@@ -69,7 +69,7 @@ ORDER BY contract_count DESC;
 `
 	response, err := r.db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, err
+		return nil, ErrNotFound
 	}
 	var data []entities.EducationalEstablishmentCountChart
 	for response.Next() {
@@ -95,7 +95,7 @@ GROUP BY sp.specialization_name
 ORDER BY contract_count DESC;`
 	response, err := r.db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, err
+		return nil, ErrNotFound
 	}
 	var data []entities.SpecializationNameCountChart
 	for response.Next() {
@@ -118,7 +118,7 @@ GROUP BY t.template_name
 ORDER BY contract_count DESC;`
 	response, err := r.db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, err
+		return nil, ErrNotFound
 	}
 	var data []entities.TemplateNameCountChart
 	for response.Next() {

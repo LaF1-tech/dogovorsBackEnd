@@ -6,6 +6,7 @@ import (
 	auth "dogovorsBackEnd/internal/use/modules/auth/controller"
 	charts "dogovorsBackEnd/internal/use/modules/charts/controller"
 	contracts "dogovorsBackEnd/internal/use/modules/contracts/controller"
+	contractsexecutioncontrol "dogovorsBackEnd/internal/use/modules/contractsexecutioncontrol/controller"
 	ee "dogovorsBackEnd/internal/use/modules/educationalestablishments/controller"
 	specializations "dogovorsBackEnd/internal/use/modules/specializations/controller"
 	templates "dogovorsBackEnd/internal/use/modules/templates/controller"
@@ -19,6 +20,7 @@ type Controllers struct {
 	specializations.SpecializationsController
 	contracts.ContractsController
 	charts.ChartsController
+	contractsexecutioncontrol.ContractsExecutionControlController
 }
 
 type Routes []http.IRoutes

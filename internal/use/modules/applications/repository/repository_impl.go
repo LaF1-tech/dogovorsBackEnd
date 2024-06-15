@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"dogovorsBackEnd/internal/use/modules/applications/entities"
 	contracts "dogovorsBackEnd/internal/use/modules/contracts/entities"
@@ -24,7 +25,7 @@ VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $9) RETURNING application_id
 `
 	typesJSON, err := json.Marshal(application.Types)
 	if err != nil {
-		return 0, err
+		return 0, ErrCannotCreate
 	}
 	row := r.db.QueryRowContext(ctx, query,
 		application.EducationalEstablishmentID,
@@ -51,18 +52,21 @@ SELECT application_id,
        types,
        application_status,
        execution_date,
-       expiration_date from vw_full_application_data
+       expiration_date from vw_full_application_data order by application_id
 `
 	res, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, ErrNotFound
+	}
 	var applications []entities.AggregatedApplication
 	for res.Next() {
 		application, err := r.scanAggregatedApplication(res)
 		if err != nil {
-			return nil, err
+			return nil, ErrNotFound
 		}
 		applications = append(applications, application)
 	}
-	return applications, err
+	return applications, nil
 }
 
 func (r *repository) GetApplicationByID(ctx context.Context, id int) (entities.Application, error) {
@@ -112,7 +116,7 @@ WHERE application_id = $9
 		application.ApplicationStatus,
 		application.ApplicationID)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot update application: %w", err)
 	}
 	return nil
 }
@@ -128,10 +132,10 @@ INSERT INTO tbl_contracts (student_id, employee_id, template_id, execution_date,
 
 func (r *repository) CreateContractExecutionControl(ctx context.Context, cec entities.ContractExecutionControl) (int, error) {
 	query := `
-INSERT INTO tbl_contract_execution_control (CONTRACT_ID, CONTRACT_STATUS) VALUES ($1,$2) RETURNING ID
+INSERT INTO tbl_contract_execution_control (contract_id, control_date) VALUES ($1,$2) RETURNING ID
 `
 
-	row := r.db.QueryRowContext(ctx, query, cec.ContractId, cec.ContractStatus)
+	row := r.db.QueryRowContext(ctx, query, cec.ContractId, cec.ControlDate)
 	return scanners.Id(row)
 }
 
@@ -150,7 +154,7 @@ INSERT INTO tbl_contract_data_registry (template_id, contract_id, data) VALUES (
 `
 	contractData, err := json.Marshal(cdr.Data)
 	if err != nil {
-		return 0, err
+		return 0, ErrCannotCreate
 	}
 	row := r.db.QueryRowContext(ctx, query, cdr.TemplateID, cdr.ContractID, contractData)
 	return scanners.Id(row)

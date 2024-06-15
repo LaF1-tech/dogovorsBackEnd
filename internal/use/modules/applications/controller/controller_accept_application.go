@@ -43,8 +43,8 @@ func (c *controller) acceptApplication(ctx context.Context, user models.User, re
 		}
 
 		contractEC := entities.ContractExecutionControl{
-			ContractId:     contractID,
-			ContractStatus: entities.ContractStatusAdded,
+			ContractId:  contractID,
+			ControlDate: application.ExecutionDate,
 		}
 
 		_, err = c.repository.CreateContractExecutionControl(ctx, contractEC)
